@@ -1,0 +1,28 @@
+{
+  "name": "nameit-backend",
+  "version": "1.0.0",
+  "description": "Backend services for NAME IT SCENTS - Firebase authentication and database management",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "node --watch index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "firebase",
+    "authentication",
+    "firestore",
+    "perfume",
+    "ecommerce"
+  ],
+  "author": "NAME IT SCENTS",
+  "license": "MIT",
+  "dependencies": {
+    "firebase": "^10.7.0"
+  },
+  "devDependencies": {},
+  "engines": {
+    "node": ">=18.0.0"
+  }
+} 

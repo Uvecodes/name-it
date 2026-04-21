@@ -1,0 +1,36 @@
+# Backend local environment
+backend/.env
+backend/.env.local
+backend/.env.*.local
+backend/service-account.json
+
+# Dependencies
+backend/node_modules/
+
+# Logs and runtime files
+backend/logs/
+backend/*.log
+backend/npm-debug.log*
+backend/yarn-debug.log*
+backend/yarn-error.log*
+backend/*.pid
+backend/*.pid.lock
+
+# Coverage and caches
+backend/coverage/
+backend/.nyc_output/
+backend/.cache/
+
+# OS/editor junk
+.DS_Store
+Thumbs.db
+#cursor rules
+.cursor/
+bin/
+temp_api_response.json
+
+# Likely-unused duplicate frontend files
+frontend/js/README.md
+frontend/css/user-dashboard.css
+frontend/css/styles2.css
+frontend/css/styles3.css

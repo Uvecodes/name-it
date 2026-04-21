@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile - NAME IT SCENTS</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/cart.css">
+    <link rel="stylesheet" href="../css/chatbot.css">
+    <link rel="stylesheet" href="../dashboard-files/user-profile.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="modern-body">
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container nav-flex">
+            <button class="hamburger" type="button" aria-label="Toggle navigation" aria-expanded="false">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <div class="nav-logo">
+                <h1 style="font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; font-style: italic; color: #0B0B0E; letter-spacing: -0.5px; margin: 0;">NAMEIT</h1>
+            </div>
+           
+            <a href="./user-dashboard.html" class="action-btn">Back to dashboard</a>
+            
+            <div class="nav-right">
+                <div class="user-menu">
+                    <div class="user-avatar">
+                        <img id="navAvatar" src="../assets/Stoofperen.jpg" alt="User Avatar">
+                        <span class="user-name" id="navUserName">--</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="dropdown-menu">
+                        <a href="./user-profile.html" class="dropdown-item active"><i class="fas fa-user"></i> My Profile</a>
+                        <a href="./settings.html" class="dropdown-item"><i class="fas fa-cog"></i> Settings</a>
+                        <a href="#" class="dropdown-item" onclick="logout(); return false;"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Dashboard Section -->
+    <section class="dashboard-section">
+        <div class="container">
+            <div class="dashboard-grid">
+                <!-- Stats Cards -->
+                <div class="stats-row">
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-shopping-bag"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 id="totalOrders">--</h3>
+                            <p>Total Orders</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-heart"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 id="wishlistCount">--</h3>
+                            <p>Wishlist Items</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-gift"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 id="rewardPoints">--</h3>
+                            <p>Reward Points</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Main Content -->
+                <div class="dashboard-content">
+                    <!-- Recent Orders -->
+                    <div class="dashboard-card">
+                        <div class="card-header">
+                            <h2>Recent Orders</h2>
+                            <a href="./orders.html" class="view-all">View All</a>
+                        </div>
+                        <div class="orders-list" id="ordersList">
+                            <!-- Orders will be dynamically loaded here -->
+                            <div class="loading-skeleton">
+                                <div class="skeleton-item"></div>
+                                <div class="skeleton-item"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Profile Summary -->
+                    <div class="dashboard-card">
+                        <div class="card-header">
+                            <h2>Profile Summary</h2>
+                            <a href="settings.html" class="edit-profile">Edit Profile</a>
+                        </div>
+                        <div class="profile-summary">
+                            <div class="profile-avatar">
+                                <img id="profileAvatar" src="../assets/Stoofperen.jpg" alt="Profile">
+                                <input type="file" id="avatarUpload" accept="image/*" style="display: none;">
+                                <button class="avatar-upload-btn" onclick="document.getElementById('avatarUpload').click()">
+                                    <i class="fas fa-camera"></i>
+                                </button>
+                            </div>
+                            <div class="profile-details">
+                                <h3 id="profileName">--</h3>
+                                <p><i class="fas fa-envelope"></i> <span id="profileEmail">--</span></p>
+                                <p><i class="fas fa-phone"></i> <span id="profilePhone">--</span></p>
+                                <p><i class="fas fa-map-marker-alt"></i> <span id="profileLocation">--</span></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Quick Actions -->
+                    <div class="dashboard-card">
+                        <div class="card-header">
+                            <h2>Quick Actions</h2>
+                        </div>
+                        <div class="quick-actions">
+                            <a href="./user-dashboard.html" class="action-btn">
+                                <i class="fas fa-shopping-cart"></i>
+                                <span>Continue Shopping</span>
+                            </a>
+                            <a href="#" class="action-btn" id="viewWishlistBtn">
+                                <i class="fas fa-heart"></i>
+                                <span>View Wishlist</span>
+                            </a>
+                            <a href="settings.html" class="action-btn">
+                                <i class="fas fa-cog"></i>
+                                <span>Account Settings</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Recent Activity -->
+                    <div class="dashboard-card">
+                        <div class="card-header">
+                            <h2>Recent Activity</h2>
+                            <a href="#" class="view-all" id="viewAllActivity">View More</a>
+                        </div>
+                        <div class="activity-list" id="activityList">
+                            <!-- Activity will be dynamically loaded here -->
+                            <div class="loading-skeleton">
+                                <div class="skeleton-item"></div>
+                                <div class="skeleton-item"></div>
+                                <div class="skeleton-item"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- API Client (must load first) -->
+    <script src="../js/api.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/cart.js"></script>
+    <script src="../js/user-profile.js"></script>
+    <script src="../js/tash-chatbot.js"></script>
+
+    <!-- TASH AI Chatbot -->
+    <div class="chatbot-container" id="tashChatbot">
+        <div class="chatbot-toggle" id="chatbotToggle">
+            <i class="fas fa-comments"></i>
+            <span class="chatbot-label">Chat with TASH</span>
+        </div>
+        <div class="chatbot-window" id="chatbotWindow">
+            <div class="chatbot-header">
+                <div class="chatbot-title">
+                    <i class="fas fa-robot"></i>
+                    <span>TASH - AI Assistant</span>
+                </div>
+                <div class="chatbot-header-controls">
+                    <button class="chatbot-voice-toggle" id="chatbotVoiceToggle" title="Voice Off">
+                        <i class="fas fa-volume-mute"></i>
+                    </button>
+                    <button class="chatbot-close" id="chatbotClose" title="Close">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="speaking-indicator" id="speakingIndicator">
+                <i class="fas fa-volume-up"></i>
+                <span>TASH is speaking...</span>
+            </div>
+            <div class="chatbot-messages" id="chatbotMessages">
+                <div class="message bot-message">
+                    <div class="message-avatar"><i class="fas fa-robot"></i></div>
+                    <div class="message-content">
+                        <p>Hello! I'm TASH, your AI assistant. How can I help you today?</p>
+                    </div>
+                </div>
+            </div>
+            <div class="chatbot-input">
+                <input type="text" id="chatbotInput" placeholder="Type or speak...">
+                <button class="chatbot-mic" id="chatbotMic" title="Voice Input"><i class="fas fa-microphone"></i></button>
+                <button class="chatbot-send" id="chatbotSend" title="Send"><i class="fas fa-paper-plane"></i></button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

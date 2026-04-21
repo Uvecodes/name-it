@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NAME IT SCENTS - Product Catalog</title>
+    <link rel="stylesheet" href="user-dashboard.css">
+    <link rel="stylesheet" href="../css/cart.css">
+    <link rel="stylesheet" href="../css/chatbot.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="modern-body">
+    <!-- Header -->
+    <header class="dashboard-header">
+        <div class="header-container">
+            <div class="logo-section">
+                <!-- <a href="../index.html" style="text-decoration: none;"> -->
+                    <h1 style="font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; font-style: italic; color: #0B0B0E; letter-spacing: -0.5px; margin: 0;">NAMEIT</h1>
+                <!-- </a> -->
+            </div>
+            
+
+            <!-- activate the search section later -->
+            <div class="search-section">
+                <form class="search-form">
+                    <input type="text" placeholder="Search luxury perfumes and clothings..." class="search-input">
+                    <button type="submit" class="search-btn">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </form>
+            </div>
+            
+            <div class="header-actions">
+                <a href="../cart.html" class="header-link" data-cart-icon>
+                    <i class="fas fa-shopping-cart"></i>
+                    <span>Cart</span>
+                </a>
+                <a href="./user-profile.html" class="header-link">
+                    <i class="fas fa-user"></i>
+                    <span>Account</span>
+                </a>
+                <button onclick="logout()" class="header-link logout-btn" style="background: none; border: none; cursor: pointer; color: inherit; font-size: inherit;">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Logout</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="dashboard-main">
+        <!-- Sidebar Filters -->
+ <aside class="sidebar-filters" data-filter-panel>
+            <!-- <button class="filters-toggle" type="button" aria-expanded="false">
+                <span class="filters-toggle-icon"><i class="fas fa-sliders-h"></i></span>
+                <span class="filters-toggle-label">Filters</span>
+            </button> -->
+            <h3>Filters</h3>
+            
+            <div class="filter-section">
+                <h4>Category</h4>
+                <label class="filter-option">
+                    <input type="checkbox" value="perfume">
+                    <span>Perfume</span>
+                </label>
+                <label class="filter-option">
+                    <input type="checkbox" value="clothes">
+                    <span>Clothes</span>
+                </label>
+            </div>
+            
+            <div class="filter-section">
+                <h4>Price Range</h4>
+                <label class="filter-option">
+                    <input type="checkbox" value="0-50">
+                    <span>₦0 - ₦50</span>
+                </label>
+                <label class="filter-option">
+                    <input type="checkbox" value="50-100">
+                    <span>₦50 - ₦100</span>
+                </label>
+                <label class="filter-option">
+                    <input type="checkbox" value="100+">
+                    <span>₦100+</span>
+                </label>
+            </div>
+            
+            <div class="filter-section">
+                <h4>Sort By</h4>
+                <select class="sort-select">
+                    <option value="Newest First" selected>Newest First</option>
+                    <option value="Price: Low to High">Price: Low to High</option>
+                    <option value="Price: High to Low">Price: High to Low</option>
+                    <option value="Most Popular">Most Popular</option>
+                </select>
+            </div>
+
+            <button class="clear-filters-btn" onclick="clearAllFilters()">
+                <i class="fas fa-times-circle"></i>
+                Clear All Filters
+            </button>
+        </aside>
+
+        <!-- Products Section -->
+        <section class="products-section">
+            <div class="products-header">
+                <h2>All Products</h2>
+                <p class="products-count">Showing <span id="productCount">24</span> products</p>
+            </div>
+            
+            <div class="products-grid" id="productsGrid">
+                <!-- Product Cards will be dynamically inserted here -->
+                
+                <!-- Sample Product Card 1 -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="../assets/placeholder-nameit.jpeg" alt="Classic Black">
+                        <div class="product-badge">New</div>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Classic Black UDT for Men 100ml</h3>
+                        <div class="product-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                            <span class="rating-count">(128)</span>
+                        </div>
+                        <p class="product-price">₦45.00</p>
+                        <button class="add-to-cart-btn">
+                            <i class="fas fa-shopping-cart"></i>
+                            Add to Cart
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Sample Product Card 2 -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="../assets/placeholder-nameit.jpeg" alt="Club De Nuit">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Club De Nuit Intense UDT 105ml</h3>
+                        <div class="product-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="far fa-star"></i>
+                            <span class="rating-count">(95)</span>
+                        </div>
+                        <p class="product-price">₦45.00</p>
+                        <button class="add-to-cart-btn">
+                            <i class="fas fa-shopping-cart"></i>
+                            Add to Cart
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Sample Product Card 3 -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="../assets/placeholder-nameit.jpeg" alt="Amber Dulcux">
+                        <div class="product-badge">Best Seller</div>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">AMBER DULCUX LUXP 100 ml</h3>
+                        <div class="product-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <span class="rating-count">(203)</span>
+                        </div>
+                        <p class="product-price">₦45.00</p>
+                        <button class="add-to-cart-btn">
+                            <i class="fas fa-shopping-cart"></i>
+                            Add to Cart
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Sample Product Card 4 -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="../assets/placeholder-nameit.jpeg" alt="Revolutionary Noir">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Revolution Revolutionary Noir UDT</h3>
+                        <div class="product-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                            <span class="rating-count">(87)</span>
+                        </div>
+                        <p class="product-price">₦45.00</p>
+                        <button class="add-to-cart-btn">
+                            <i class="fas fa-shopping-cart"></i>
+                            Add to Cart
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Sample Product Card 5 -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="../assets/placeholder-nameit.jpeg" alt="GENIAL ATTITUDE">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">GENIAL ATTITUDE EDP 100 ml</h3>
+                        <div class="product-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="far fa-star"></i>
+                            <span class="rating-count">(64)</span>
+                        </div>
+                        <p class="product-price">₦45.00</p>
+                        <button class="add-to-cart-btn">
+                            <i class="fas fa-shopping-cart"></i>
+                            Add to Cart
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Sample Product Card 6 -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="../assets/placeholder-nameit.jpeg" alt="Sheer Beauty">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Sheer Beauty. EDT 100ml</h3>
+                        <div class="product-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <span class="rating-count">(156)</span>
+                        </div>
+                        <p class="product-price">₦45.00</p>
+                        <button class="add-to-cart-btn">
+                            <i class="fas fa-shopping-cart"></i>
+                            Add to Cart
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Sample Product Card 7 -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="../assets/placeholder-nameit.jpeg" alt="Shuhrah Perfume">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Shuhrah Perfume for Men EDP 90ml</h3>
+                        <div class="product-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                            <span class="rating-count">(112)</span>
+                        </div>
+                        <p class="product-price">₦45.00</p>
+                        <button class="add-to-cart-btn">
+                            <i class="fas fa-shopping-cart"></i>
+                            Add to Cart
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Sample Product Card 8 -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="../assets/placeholder-nameit.jpeg" alt="Classic Gold">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Classic Gold EDT For Men 100ml</h3>
+                        <div class="product-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="far fa-star"></i>
+                            <span class="rating-count">(73)</span>
+                        </div>
+                        <p class="product-price">₦45.00</p>
+                        <button class="add-to-cart-btn">
+                            <i class="fas fa-shopping-cart"></i>
+                            Add to Cart
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pagination -->
+            <div class="pagination">
+                <button class="page-btn" disabled>
+                    <i class="fas fa-chevron-left"></i>
+                    Previous
+                </button>
+                <div class="page-numbers">
+                    <span class="page-number active">1</span>
+                    <span class="page-number">2</span>
+                    <span class="page-number">3</span>
+                    <span class="page-number">4</span>
+                </div>
+                <button class="page-btn">
+                    Next
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="dashboard-footer">
+        <div class="footer-container">
+            <p>&copy; 2024 NAME IT SCENTS. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- API Client (must load first) -->
+    <script src="../js/api.js"></script>
+    
+    <!-- Firebase and Auth Scripts (DEPRECATED - kept for fallback during migration) -->
+    <!--
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+    <script src="../js/firebase-config.js"></script>
+    -->
+    <script src="../js/auth.js"></script>
+    <script src="../js/cart.js"></script>
+    <script src="../js/user-dashboard.js"></script>
+    <script src="../js/tash-chatbot.js"></script>
+
+    <!-- TASH AI Chatbot -->
+    <div class="chatbot-container" id="tashChatbot">
+        <div class="chatbot-toggle" id="chatbotToggle">
+            <i class="fas fa-comments"></i>
+            <span class="chatbot-label">Chat with TASH</span>
+        </div>
+        <div class="chatbot-window" id="chatbotWindow">
+            <div class="chatbot-header">
+                <div class="chatbot-title">
+                    <i class="fas fa-robot"></i>
+                    <span>TASH - AI Assistant</span>
+                </div>
+                <div class="chatbot-header-controls">
+                    <button class="chatbot-voice-toggle" id="chatbotVoiceToggle" title="Voice Off">
+                        <i class="fas fa-volume-mute"></i>
+                    </button>
+                    <button class="chatbot-close" id="chatbotClose" title="Close">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="speaking-indicator" id="speakingIndicator">
+                <i class="fas fa-volume-up"></i>
+                <span>TASH is speaking...</span>
+            </div>
+            <div class="chatbot-messages" id="chatbotMessages">
+                <div class="message bot-message">
+                    <div class="message-avatar"><i class="fas fa-robot"></i></div>
+                    <div class="message-content">
+                        <p>Hello! I'm TASH, your AI assistant. How can I help you today?</p>
+                    </div>
+                </div>
+            </div>
+            <div class="chatbot-input">
+                <input type="text" id="chatbotInput" placeholder="Type or speak...">
+                <button class="chatbot-mic" id="chatbotMic" title="Voice Input"><i class="fas fa-microphone"></i></button>
+                <button class="chatbot-send" id="chatbotSend" title="Send"><i class="fas fa-paper-plane"></i></button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
+
+
+

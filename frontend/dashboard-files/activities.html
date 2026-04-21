@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Activity - NAME IT SCENTS</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/cart.css">
+    <link rel="stylesheet" href="../css/chatbot.css">
+    <link rel="stylesheet" href="user-profile.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .activities-page {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            min-height: calc(100vh - 80px);
+            padding: 40px 20px;
+        }
+
+        .activities-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .activities-header {
+            margin-bottom: 30px;
+        }
+
+        .activities-header h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            font-weight: 700;
+            color: #111;
+            margin-bottom: 8px;
+        }
+
+        .activities-header p {
+            color: #666;
+            font-size: 1rem;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: #14b8a6;
+            text-decoration: none;
+            font-weight: 500;
+            margin-bottom: 20px;
+            transition: color 0.2s;
+        }
+
+        .back-link:hover {
+            color: #0d9488;
+        }
+
+        .activities-list-full {
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+            overflow: hidden;
+        }
+
+        .activity-item-full {
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+            padding: 20px;
+            border-bottom: 1px solid #f0f0f0;
+            transition: background 0.2s;
+        }
+
+        .activity-item-full:last-child {
+            border-bottom: none;
+        }
+
+        .activity-item-full:hover {
+            background: #f9fafb;
+        }
+
+        .activity-icon-full {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            background: #14b8a6;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        .activity-icon-full.order {
+            background: #3b82f6;
+        }
+
+        .activity-icon-full.wishlist {
+            background: #ef4444;
+        }
+
+        .activity-icon-full.profile {
+            background: #8b5cf6;
+        }
+
+        .activity-icon-full.account {
+            background: #10b981;
+        }
+
+        .activity-content-full {
+            flex: 1;
+        }
+
+        .activity-title-full {
+            font-weight: 600;
+            color: #111;
+            font-size: 1rem;
+            margin-bottom: 4px;
+        }
+
+        .activity-description-full {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 8px;
+            line-height: 1.5;
+        }
+
+        .activity-time-full {
+            font-size: 0.8rem;
+            color: #999;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .activity-time-full i {
+            font-size: 0.7rem;
+        }
+
+        .empty-activities {
+            text-align: center;
+            padding: 60px 20px;
+        }
+
+        .empty-activities i {
+            font-size: 4rem;
+            color: #d1d5db;
+            margin-bottom: 20px;
+        }
+
+        .empty-activities h3 {
+            font-size: 1.3rem;
+            color: #111;
+            margin-bottom: 8px;
+        }
+
+        .empty-activities p {
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .empty-activities a {
+            display: inline-block;
+            padding: 12px 24px;
+            background: #14b8a6;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: background 0.2s;
+        }
+
+        .empty-activities a:hover {
+            background: #0d9488;
+        }
+
+        .loading-activities {
+            text-align: center;
+            padding: 40px;
+            color: #666;
+        }
+
+        .loading-activities i {
+            font-size: 2rem;
+            margin-bottom: 12px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        @media (max-width: 600px) {
+            .activity-item-full {
+                padding: 16px;
+            }
+
+            .activity-icon-full {
+                width: 40px;
+                height: 40px;
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body class="modern-body">
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container nav-flex">
+            <button class="hamburger" type="button" aria-label="Toggle navigation" aria-expanded="false">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <div class="nav-logo">
+                <h1 style="font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; font-style: italic; color: #0B0B0E; letter-spacing: -0.5px; margin: 0;">NAMEIT</h1>
+            </div>
+           
+            <a href="./user-profile.html" class="action-btn">Back to Profile</a>
+            
+            <div class="nav-right">
+                <div class="user-menu">
+                    <div class="user-avatar">
+                        <img id="navAvatar" src="../assets/Stoofperen.jpg" alt="User Avatar">
+                        <span class="user-name" id="navUserName">--</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="dropdown-menu">
+                        <a href="./user-profile.html" class="dropdown-item"><i class="fas fa-user"></i> My Profile</a>
+                        <a href="./orders.html" class="dropdown-item"><i class="fas fa-shopping-bag"></i> My Orders</a>
+                        <a href="./activities.html" class="dropdown-item active"><i class="fas fa-history"></i> Activity</a>
+                        <a href="./settings.html" class="dropdown-item"><i class="fas fa-cog"></i> Settings</a>
+                        <a href="#" class="dropdown-item" onclick="logout(); return false;"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Activities Page -->
+    <section class="activities-page">
+        <div class="activities-container">
+            <a href="./user-profile.html" class="back-link">
+                <i class="fas fa-arrow-left"></i>
+                Back to Profile
+            </a>
+
+            <div class="activities-header">
+                <h1>My Activity</h1>
+                <p>View your recent account activity and history</p>
+            </div>
+
+            <div class="activities-list-full" id="activitiesListFull">
+                <div class="loading-activities">
+                    <i class="fas fa-spinner"></i>
+                    <p>Loading your activity...</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Scripts -->
+    <script src="../js/api.js"></script>
+    <script src="../js/auth.js"></script>
+    <script>
+        // Initialize activities page
+        document.addEventListener('DOMContentLoaded', () => {
+            initActivitiesPage();
+        });
+
+        async function initActivitiesPage() {
+            // Wait for API client
+            let attempts = 0;
+            while (!window.apiClient && attempts < 20) {
+                await new Promise(r => setTimeout(r, 300));
+                attempts++;
+            }
+
+            if (!window.apiClient) {
+                showError('Failed to connect to server');
+                return;
+            }
+
+            // Check authentication
+            if (!window.apiClient.isAuthenticated()) {
+                window.location.href = '../login.html';
+                return;
+            }
+
+            // Load user info for nav
+            try {
+                const response = await window.apiClient.getCurrentUser();
+                if (response && response.user) {
+                    const user = response.user;
+                    const navUserName = document.getElementById('navUserName');
+                    const navAvatar = document.getElementById('navAvatar');
+                    
+                    if (navUserName) navUserName.textContent = user.name || 'User';
+                    if (navAvatar && user.avatarUrl) {
+                        navAvatar.src = user.avatarUrl;
+                        navAvatar.onerror = () => { navAvatar.src = '../assets/Stoofperen.jpg'; };
+                    }
+                }
+            } catch (error) {
+                console.error('Error loading user:', error);
+            }
+
+            // Load all activities
+            await loadAllActivities();
+        }
+
+        async function loadAllActivities() {
+            const container = document.getElementById('activitiesListFull');
+            
+            try {
+                const response = await window.apiClient.getActivity(50);
+                const activities = response.activities || [];
+
+                if (activities.length === 0) {
+                    container.innerHTML = `
+                        <div class="empty-activities">
+                            <i class="fas fa-history"></i>
+                            <h3>No activity yet</h3>
+                            <p>Your account activity will appear here</p>
+                            <a href="./user-dashboard.html">Start Shopping</a>
+                        </div>
+                    `;
+                    return;
+                }
+
+                container.innerHTML = activities.map(activity => createActivityItem(activity)).join('');
+            } catch (error) {
+                console.error('Error loading activities:', error);
+                container.innerHTML = `
+                    <div class="empty-activities">
+                        <i class="fas fa-exclamation-circle"></i>
+                        <h3>Could not load activity</h3>
+                        <p>Please try refreshing the page</p>
+                    </div>
+                `;
+            }
+        }
+
+        function createActivityItem(activity) {
+            const title = activity.title || 'Activity';
+            const description = activity.description || '';
+            const icon = activity.icon || 'fa-circle';
+            const type = activity.type || '';
+            const time = formatRelativeTime(activity.createdAt);
+            
+            // Determine icon color class based on type
+            let iconClass = '';
+            if (type.includes('order')) iconClass = 'order';
+            else if (type.includes('wishlist')) iconClass = 'wishlist';
+            else if (type.includes('profile') || type.includes('password')) iconClass = 'profile';
+            else if (type.includes('account')) iconClass = 'account';
+
+            return `
+                <div class="activity-item-full">
+                    <div class="activity-icon-full ${iconClass}">
+                        <i class="fas ${icon}"></i>
+                    </div>
+                    <div class="activity-content-full">
+                        <div class="activity-title-full">${title}</div>
+                        <div class="activity-description-full">${description}</div>
+                        <div class="activity-time-full">
+                            <i class="fas fa-clock"></i>
+                            ${time}
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function formatRelativeTime(dateString) {
+            if (!dateString) return 'Just now';
+
+            try {
+                const date = new Date(dateString);
+                const now = new Date();
+                const diffMs = now - date;
+                const diffSecs = Math.floor(diffMs / 1000);
+                const diffMins = Math.floor(diffSecs / 60);
+                const diffHours = Math.floor(diffMins / 60);
+                const diffDays = Math.floor(diffHours / 24);
+
+                if (diffSecs < 60) return 'Just now';
+                if (diffMins < 60) return `${diffMins} minute${diffMins !== 1 ? 's' : ''} ago`;
+                if (diffHours < 24) return `${diffHours} hour${diffHours !== 1 ? 's' : ''} ago`;
+                if (diffDays < 7) return `${diffDays} day${diffDays !== 1 ? 's' : ''} ago`;
+
+                return date.toLocaleDateString('en-US', {
+                    year: 'numeric',
+                    month: 'short',
+                    day: 'numeric',
+                });
+            } catch {
+                return 'Unknown';
+            }
+        }
+
+        function showError(message) {
+            const container = document.getElementById('activitiesListFull');
+            container.innerHTML = `
+                <div class="empty-activities">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <h3>Error</h3>
+                    <p>${message}</p>
+                </div>
+            `;
+        }
+    </script>
+    <script src="../js/tash-chatbot.js"></script>
+
+    <!-- TASH AI Chatbot -->
+    <div class="chatbot-container" id="tashChatbot">
+        <div class="chatbot-toggle" id="chatbotToggle">
+            <i class="fas fa-comments"></i>
+            <span class="chatbot-label">Chat with TASH</span>
+        </div>
+        <div class="chatbot-window" id="chatbotWindow">
+            <div class="chatbot-header">
+                <div class="chatbot-title">
+                    <i class="fas fa-robot"></i>
+                    <span>TASH - AI Assistant</span>
+                </div>
+                <div class="chatbot-header-controls">
+                    <button class="chatbot-voice-toggle" id="chatbotVoiceToggle" title="Voice Off">
+                        <i class="fas fa-volume-mute"></i>
+                    </button>
+                    <button class="chatbot-close" id="chatbotClose" title="Close">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="speaking-indicator" id="speakingIndicator">
+                <i class="fas fa-volume-up"></i>
+                <span>TASH is speaking...</span>
+            </div>
+            <div class="chatbot-messages" id="chatbotMessages">
+                <div class="message bot-message">
+                    <div class="message-avatar"><i class="fas fa-robot"></i></div>
+                    <div class="message-content">
+                        <p>Hello! I'm TASH, your AI assistant. How can I help you today?</p>
+                    </div>
+                </div>
+            </div>
+            <div class="chatbot-input">
+                <input type="text" id="chatbotInput" placeholder="Type or speak...">
+                <button class="chatbot-mic" id="chatbotMic" title="Voice Input"><i class="fas fa-microphone"></i></button>
+                <button class="chatbot-send" id="chatbotSend" title="Send"><i class="fas fa-paper-plane"></i></button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

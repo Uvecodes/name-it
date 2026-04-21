@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Payment - NAME IT SCENTS</title>
+  <link rel="stylesheet" href="../css/styles.css">
+  <link rel="stylesheet" href="../css/payment.css">
+  <link rel="stylesheet" href="../css/cart.css">
+  <link rel="stylesheet" href="../css/chatbot.css">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+  <!-- Navigation -->
+  <!-- <nav class="navbar">
+    <div class="container nav-flex">
+      <button class="hamburger" type="button" aria-label="Toggle navigation" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <div class="nav-logo">
+         <h1 style="font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; font-style: italic; color: #0B0B0E; letter-spacing: -0.5px; margin: 0;">NAMEIT</h1>
+      </div>
+      <ul class="nav-menu">
+        <li><a href="../index.html" class="nav-link">Home</a></li>
+        <li><a href="../collection.html" class="nav-link">Collection</a></li>
+        <li><a href="../index.html#products" class="nav-link">Products</a></li>
+        <li><a href="../index.html#contact" class="nav-link">Contact Us</a></li>
+      </ul>
+      <div class="nav-right">
+        <a href="../cart.html" class="cart-link" data-cart-icon>
+          <i class="fas fa-shopping-bag"></i>
+        </a>
+        <div class="nav-buttons">
+          <a href="../login.html" class="btn btn-outline" id="loginBtn">Login</a>
+          <a href="../signup.html" class="btn btn-primary" id="signUpBtn">Sign Up</a>
+        </div>
+      </div>
+    </div>
+  </nav> -->
+
+
+
+   <nav class="navbar">
+    <div class="container nav-flex">
+      <button class="hamburger" type="button" aria-label="Toggle navigation" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <div class="nav-logo">
+        
+                     <h1 style="font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; font-style: italic; color: #0B0B0E; letter-spacing: -0.5px; margin: 0;">NAMEIT</h1>
+              
+      </div>
+      <!-- <ul class="nav-menu">
+        <li><a href="../index.html" class="nav-link">Home</a></li>
+        <li><a href="../collection.html" class="nav-link">Collection</a></li>
+        <li><a href="../index.html#products" class="nav-link">Products</a></li>
+        <li><a href="../index.html#contact" class="nav-link">Contact Us</a></li>
+      </ul> -->
+      <a href="../cart.html" class="action-btn cart-btn">Back to Cart</a>
+      <div class="nav-right">
+        <!-- activate search bar later -->
+        <!-- <form class="search-form">
+          <input type="text" placeholder="search">
+          <button type="submit"><i class="fas fa-search"></i></button>
+        </form> -->
+        <!-- <a href="../cart.html" class="cart-link"><i class="fas fa-shopping-bag"></i></a> -->
+      </div>
+    </div>
+  </nav>
+
+  <main class="payment-main">
+    <div class="container">
+      <!-- Page Header -->
+      <div class="payment-header">
+        <h1>Complete Your Order</h1>
+        <p>Review your order and provide your delivery information</p>
+      </div>
+
+      <!-- Empty Cart Message -->
+      <div id="payment-empty-cart" class="payment-empty" style="display: none;">
+        <i class="fas fa-shopping-cart"></i>
+        <h2>Your cart is empty</h2>
+        <p>Add items to your cart before checkout</p>
+        <a href="../collection.html" class="btn btn-dark">Continue Shopping</a>
+      </div>
+
+      <!-- Payment Content (hidden when cart is empty) -->
+      <div id="payment-content" class="payment-content" style="display: none;">
+        <div class="payment-grid">
+          <!-- Left Column: Payment Form -->
+          <div class="payment-form-section">
+            <div class="payment-section-card">
+              <h2 class="section-title">
+                <i class="fas fa-user"></i>
+                Customer Information
+              </h2>
+              
+              <form id="paymentForm" class="payment-form">
+                <!-- Customer Name -->
+                <div class="form-group">
+                  <label for="customerName">Full Name</label>
+                  <div class="input-wrapper">
+                    <i class="fas fa-user"></i>
+                    <input type="text" id="customerName" placeholder="John Doe" required>
+                  </div>
+                </div>
+
+                <!-- Customer Phone -->
+                <div class="form-group">
+                  <label for="customerPhone">Phone Number</label>
+                  <div class="input-wrapper">
+                    <i class="fas fa-phone"></i>
+                    <input type="tel" id="customerPhone" placeholder="+1 (555) 123-4567" required>
+                  </div>
+                </div>
+
+                <!-- Customer Email (optional) -->
+                  <div class="form-group">
+                  <label for="customerEmail">Email Address (Optional)</label>
+                    <div class="input-wrapper">
+                    <i class="fas fa-envelope"></i>
+                    <input type="email" id="customerEmail" placeholder="john.doe@example.com">
+                  </div>
+                </div>
+
+                <!-- Shipping Address -->
+                <div class="section-divider">
+                  <h3 class="section-subtitle">
+                    <i class="fas fa-truck"></i>
+                    Shipping Address
+                  </h3>
+                </div>
+
+                <div class="form-group">
+                  <label for="shippingAddress">Street Address</label>
+                  <div class="input-wrapper">
+                    <i class="fas fa-home"></i>
+                    <input type="text" id="shippingAddress" placeholder="123 Main Street" required>
+                  </div>
+                </div>
+
+                <div class="form-row">
+                  <div class="form-group">
+                    <label for="shippingCity">City</label>
+                    <div class="input-wrapper">
+                      <i class="fas fa-city"></i>
+                      <input type="text" id="shippingCity" placeholder="New York" required>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="shippingState">State</label>
+                    <div class="input-wrapper">
+                      <i class="fas fa-map"></i>
+                      <input type="text" id="shippingState" placeholder="NY" required>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-row">
+                  <div class="form-group">
+                    <label for="shippingZip">ZIP Code</label>
+                    <div class="input-wrapper">
+                      <i class="fas fa-mail-bulk"></i>
+                      <input type="text" id="shippingZip" placeholder="10001" maxlength="10" required>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="shippingCountry">Country</label>
+                    <div class="input-wrapper">
+                      <i class="fas fa-globe"></i>
+                      <input type="text" id="shippingCountry" placeholder="United States" required>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Additional Notes -->
+                    <div class="form-group">
+                  <label for="orderNotes">Additional Notes (Optional)</label>
+                      <div class="input-wrapper">
+                    <i class="fas fa-sticky-note"></i>
+                    <textarea id="orderNotes" placeholder="Any special instructions or delivery notes..." rows="3"></textarea>
+                  </div>
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit" class="btn btn-dark payment-submit-btn" id="submitPayment">
+                  <i class="fab fa-whatsapp"></i>
+                  Complete Order via WhatsApp
+                </button>
+              </form>
+            </div>
+          </div>
+
+          <!-- Right Column: Order Summary -->
+          <div class="payment-summary-section">
+            <div class="payment-section-card">
+              <h2 class="section-title">
+                <i class="fas fa-shopping-bag"></i>
+                Order Summary
+              </h2>
+
+              <!-- Order Items -->
+              <div id="payment-order-items" class="payment-order-items">
+                <!-- Items will be populated by JavaScript -->
+              </div>
+
+              <!-- Rewards Points Section -->
+              <div id="rewards-section" class="rewards-section" style="display: none;">
+                <div class="rewards-header">
+                  <i class="fas fa-gift"></i>
+                  <span>Reward Points</span>
+                </div>
+                <div class="rewards-balance">
+                  <span>Available Points:</span>
+                  <strong id="rewards-balance">0</strong>
+                  <span class="rewards-value">(= ₦<span id="rewards-value">0</span>)</span>
+                </div>
+                <div class="rewards-redeem">
+                  <label for="points-to-redeem">Use Points:</label>
+                  <div class="redeem-input-wrapper">
+                    <input type="number" id="points-to-redeem" min="0" max="0" value="0" placeholder="0">
+                    <button type="button" id="use-all-points" class="use-all-btn">Use All</button>
+                  </div>
+                  <span class="redeem-discount">Discount: -₦<span id="points-discount">0</span></span>
+                </div>
+              </div>
+
+              <!-- Order Summary -->
+              <div class="payment-summary">
+                <div class="summary-row">
+                  <span>Subtotal</span>
+                  <span id="payment-subtotal">₦0.00</span>
+                </div>
+                <div class="summary-row">
+                  <span>Shipping</span>
+                  <span id="payment-shipping">₦0.00</span>
+                </div>
+                <div class="summary-row">
+                  <span>Tax</span>
+                  <span id="payment-tax">₦0.00</span>
+                </div>
+                <div class="summary-row rewards-discount-row" id="rewards-discount-row" style="display: none;">
+                  <span>Points Discount</span>
+                  <span id="payment-points-discount">-₦0.00</span>
+                </div>
+                <div class="summary-row summary-total">
+                  <span>Total</span>
+                  <span id="payment-total">₦0.00</span>
+                </div>
+              </div>
+
+              <!-- Info Badge -->
+              <div class="payment-security">
+                <i class="fab fa-whatsapp"></i>
+                <p>Your order will be sent via WhatsApp for confirmation</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-section">
+          <div class="footer-logo">
+            <img src="../assets/working logos.png" alt="NAME IT SCENTS">
+          </div>
+          <p class="footer-description">
+            Discover the beauty of fragrance with our collection of premium perfumes to enrich your everyday smell.
+          </p>
+        </div>
+        <div class="footer-section">
+          <h3>Quick Links</h3>
+          <ul class="footer-links">
+            <li><a href="../index.html">Home</a></li>
+            <li><a href="../collection.html">Collection</a></li>
+            <li><a href="../index.html#products">Products</a></li>
+            <li><a href="../index.html#contact">Contact Us</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h3>Contact Info</h3>
+          <div class="contact-info">
+            <p><i class="fas fa-map-marker-alt"></i> 123 Perfume Street, Luxury City, LC 12345</p>
+            <p><i class="fas fa-phone"></i> +1 (555) 123-4567</p>
+            <p><i class="fas fa-envelope"></i> info@nameitscents.com</p>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2024 NAME IT SCENTS. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="../js/api.js"></script>
+  <script src="../js/navigation.js"></script>
+  <script src="../js/cart.js"></script>
+  <script src="../js/auth.js"></script>
+  <script src="../js/payment.js"></script>
+  <script src="../js/tash-chatbot.js"></script>
+
+  <!-- TASH AI Chatbot -->
+  <div class="chatbot-container" id="tashChatbot">
+      <div class="chatbot-toggle" id="chatbotToggle">
+          <i class="fas fa-comments"></i>
+          <span class="chatbot-label">Chat with TASH</span>
+      </div>
+      <div class="chatbot-window" id="chatbotWindow">
+          <div class="chatbot-header">
+              <div class="chatbot-title">
+                  <i class="fas fa-robot"></i>
+                  <span>TASH - AI Assistant</span>
+              </div>
+              <div class="chatbot-header-controls">
+                  <button class="chatbot-voice-toggle" id="chatbotVoiceToggle" title="Voice Off">
+                      <i class="fas fa-volume-mute"></i>
+                  </button>
+                  <button class="chatbot-close" id="chatbotClose" title="Close">
+                      <i class="fas fa-times"></i>
+                  </button>
+              </div>
+          </div>
+          <div class="speaking-indicator" id="speakingIndicator">
+              <i class="fas fa-volume-up"></i>
+              <span>TASH is speaking...</span>
+          </div>
+          <div class="chatbot-messages" id="chatbotMessages">
+              <div class="message bot-message">
+                  <div class="message-avatar"><i class="fas fa-robot"></i></div>
+                  <div class="message-content">
+                      <p>Hello! I'm TASH, your AI assistant. How can I help you today?</p>
+                  </div>
+              </div>
+          </div>
+          <div class="chatbot-input">
+              <input type="text" id="chatbotInput" placeholder="Type or speak...">
+              <button class="chatbot-mic" id="chatbotMic" title="Voice Input"><i class="fas fa-microphone"></i></button>
+              <button class="chatbot-send" id="chatbotSend" title="Send"><i class="fas fa-paper-plane"></i></button>
+          </div>
+      </div>
+  </div>
+</body>
+</html> 

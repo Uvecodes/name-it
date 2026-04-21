@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NAME IT SCENTS - Luxury Perfumes</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/cart.css">
+    <link rel="stylesheet" href="css/chatbot.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+</head>
+<body class="modern-body">
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container nav-flex">
+            <button class="hamburger" type="button" aria-label="Toggle navigation" aria-expanded="false">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <div class="nav-logo">
+                <a href="./index.html" style="text-decoration: none;">
+                    <h1 style="font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; font-style: italic; color: #0B0B0E; letter-spacing: -0.5px; margin: 0;">NAMEIT</h1>
+                </a>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="./index.html" class="nav-link">Home</a></li>
+                <li><a href="collection.html" class="nav-link">Collection</a></li>
+                <li><a href="#products" class="nav-link">Products</a></li>
+                <li><a href="#contact" class="nav-link">Contact</a></li>
+            </ul>
+            <div class="nav-right">
+                <a href="cart.html" class="cart-link" data-cart-icon>
+                    <i class="fas fa-shopping-bag"></i>
+                </a>
+                <div class="nav-buttons">
+                    <a href="login.html" class="btn btn-outline" id="loginBtn">Login</a>
+                    <a href="signup.html" class="btn btn-primary" id="signUpBtn">Sign Up</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <!-- Background Video -->
+        <!--video class="hero-video" autoplay muted loop playsinline>
+            <source src="./assets/5900937-uhd_3840_2160_30fps.mp4" type="video/mp4"-->
+            <!-- Fallback for browsers that don't support video -->
+            <!-- Your browser does not support the video tag. -->
+        <!-- </video> -->
+        <div class="hero-bg" style="background-image: url('./assets/9027ee99-f170-424e-a186-5d81f7947b3e'); background-size: cover; background-position: center; position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;"></div>
+        <div class="hero-overlay"></div>
+        <div class="container hero-grid">
+            <div class="hero-text">
+                <h1><span>Smell is a word</span><br>Perfume is <span class="hero-large">literature</span></h1>
+                <p class="hero-sub">Discover the beauty of fragrance with our collection of premium perfumes to enrich your everyday smell</p>
+                <a href="./collection.html" class="btn btn-dark hero-btn">Shop Now <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+    </section>
+<!-- this section will be moving like a carousel and manipulated by javascript -->
+    <!-- Brands Row -->
+    <section class="brands-row">
+        <div class="container">
+            <div class="brands-carousel-wrapper" id="brandsCarousel">
+                <div class="brands-carousel-track" id="brandsCarouselTrack">
+                    <!-- Brand items will be duplicated for continuous scrolling -->
+                </div>
+            </div>
+        </div>
+    </section>
+<!-- this section will be manipulated by javascript -->
+    <!-- Popular Products -->
+    <section class="products-section" id="products">
+        <div class="container">
+            <h2 class="section-title">Popular Products</h2>
+            <div class="products-row">
+                <div class="product-card">
+                    <img src="./assets/placeholder-nameit.jpeg" alt="Classic Black">
+                    <div class="product-info">
+                        <div class="product-title">Loading...</div>
+                        <div class="product-bottom">
+                            <span class="product-price">$...</span>
+                            <button class="add-cart"><i class="fas fa-shopping-cart"></i></button>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <img src="./assets/placeholder-nameit.jpeg" alt="Club De Nuit">
+                    <div class="product-info">
+                        <div class="product-title">Loading...</div>
+                        <div class="product-bottom">
+                            <span class="product-price">$...</span>
+                            <button class="add-cart"><i class="fas fa-shopping-cart"></i></button>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <img src="./assets/placeholder-nameit.jpeg" alt="Amber Dulcux">
+                    <div class="product-info">
+                        <div class="product-title">Loading...</div>
+                        <div class="product-bottom">
+                            <span class="product-price">$...</span>
+                            <button class="add-cart"><i class="fas fa-shopping-cart"></i></button>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <img src="./assets/placeholder-nameit.jpeg" alt="Revolutionary Noir">
+                    <div class="product-info">
+                        <div class="product-title">Loading...</div>
+                        <div class="product-bottom">
+                            <span class="product-price">$...</span>
+                            <button class="add-cart"><i class="fas fa-shopping-cart"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+<!-- this section will be manipulated by javascript -->
+    <!-- New Products -->
+    <section class="products-section" id="newProducts">
+        <div class="container">
+            <h2 class="section-title">New Products</h2>
+            <div class="carousel-container">
+                <button class="carousel-btn carousel-prev" id="newProductsPrev" aria-label="Previous products">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <div class="products-row carousel-wrapper" id="newProductsCarousel">
+                    <!-- Product cards will be dynamically inserted here -->
+                </div>
+                <button class="carousel-btn carousel-next" id="newProductsNext" aria-label="Next products">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+            <div class="carousel-indicators" id="newProductsIndicators">
+                <!-- Indicators will be dynamically inserted here -->
+            </div>
+        </div>
+    </section>
+<!-- this section will be manipulated by javascript -->
+    <!-- Gallery/Feature Section -->
+    <section class="gallery-feature-section" id="galleryFeature">
+        <div class="container gallery-feature-grid">
+            <div class="gallery-feature-large" id="galleryPopular">
+                <div class="gallery-carousel-container">
+                    <div class="gallery-carousel-wrapper" id="galleryPopularCarousel">
+                        <!-- Popular product images will be dynamically inserted here -->
+                    </div>
+                    <a href="./collection.html" class="btn btn-dark gallery-btn">Shop Now</a>
+                </div>
+            </div>
+            <div class="gallery-feature-small" id="galleryPerfume">
+                <img src="./assets/placeholder-nameit.jpeg" alt="Loading...">
+                <a href="#" class="btn btn-dark gallery-btn">Shop Now</a>
+            </div>
+            <div class="gallery-feature-small" id="galleryClothing">
+                <img src="./assets/placeholder-nameit.jpeg" alt="Loading...">
+                <a href="#" class="btn btn-dark gallery-btn">Shop Now</a>
+            </div>
+        </div>
+    </section>
+
+    
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo">
+                        <!-- <img src="./assets/working logos.png" alt="NAME IT SCENTS"> -->
+                         <h1 style="font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; font-style: italic; color: whitesmoke; letter-spacing: -0.5px; margin: 0;">NAMEIT</h1>
+                    </div>
+                    <p class="footer-description">
+                        Discover the beauty of fragrance with our collection of premium perfumes to enrich your everyday smell.
+                    </p>
+                    <div class="social-links">
+                        <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Home</a></li>
+                        <li><a href="collection.html">Collection</a></li>
+                        <li><a href="#products">Products</a></li>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <!-- <div class="footer-section">
+                    <h3>Customer Service</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Shipping Info</a></li>
+                        <li><a href="#">Returns & Exchanges</a></li>
+                        <li><a href="#">Size Guide</a></li>
+                        <li><a href="#">Track Order</a></li>
+                    </ul>
+                </div> -->
+                
+                <div class="footer-section">
+                    <h3>Contact Info</h3>
+                    <div class="contact-info">
+                        <p><i class="fas fa-map-marker-alt"></i> 123 Perfume Street, Luxury City, LC 12345</p>
+                        <p><i class="fas fa-phone"></i> +1 (555) 123-4567</p>
+                        <p><i class="fas fa-envelope"></i> info@nameitscents.com</p>
+                    </div>
+                    <div class="newsletter">
+                        <h4>Newsletter</h4>
+                        <p>Subscribe for updates and exclusive offers</p>
+                        <form class="newsletter-form">
+                            <input type="email" placeholder="Enter your email">
+                            <button type="submit"><i class="fas fa-arrow-right"></i></button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <div class="footer-bottom-content">
+                    <p>&copy; 2024 NAME IT SCENTS. All rights reserved.</p>
+                    <div class="footer-bottom-links">
+                        <a href="#">Privacy Policy</a>
+                        <a href="#">Terms of Service</a>
+                        <a href="#">Cookie Policy</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- TASH AI Chatbot -->
+    <!-- TASH AI Chatbot -->
+    <div class="chatbot-container" id="tashChatbot">
+        <div class="chatbot-toggle" id="chatbotToggle">
+            <i class="fas fa-comments"></i>
+            <span class="chatbot-label">Chat with TASH</span>
+        </div>
+        
+        <div class="chatbot-window" id="chatbotWindow">
+            <div class="chatbot-header">
+                <div class="chatbot-title">
+                    <i class="fas fa-user-hair-long"></i>
+                    <span>TASH - AI Assistant</span>
+                </div>
+                <div class="chatbot-header-controls">
+                    <button class="chatbot-voice-toggle" id="chatbotVoiceToggle" title="Voice Off (click to enable)">
+                        <i class="fas fa-volume-mute"></i>
+                    </button>
+                    <button class="chatbot-close" id="chatbotClose" title="Close">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Speaking indicator -->
+            <div class="speaking-indicator" id="speakingIndicator">
+                <i class="fas fa-volume-up"></i>
+                <span>TASH is speaking...</span>
+            </div>
+            
+            <div class="chatbot-messages" id="chatbotMessages">
+                <div class="message bot-message">
+                    <div class="message-avatar">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <div class="message-content">
+                        <p>Hello! I'm TASH, your AI assistant for NAME IT SCENTS. I can help you find the perfect perfume, track orders, or answer questions. How can I help you today?</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="chatbot-input">
+                <input type="text" id="chatbotInput" placeholder="Type or speak your message...">
+                <button class="chatbot-mic" id="chatbotMic" title="Voice Input">
+                    <i class="fas fa-microphone"></i>
+                </button>
+                <button class="chatbot-send" id="chatbotSend" title="Send">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- API Client (must load first) - cache busted with timestamp -->
+    <script src="js/api.js?v=1736549000"></script>
+    
+    <!-- Application Scripts - cache busted with timestamp -->
+    <script src="js/navigation.js?v=1736549000"></script>
+    <script src="js/cart.js?v=1736549000"></script>
+    <script src="js/tash-chatbot.js?v=1736549000"></script>
+    <script src="js/index.js?v=1736549000"></script>
+</body>
+</html> 

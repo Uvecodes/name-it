@@ -1,0 +1,363 @@
+/* Collection Page Styles - React App Pattern */
+
+/* CSS Variables (inherited from styles.css, defined here for clarity) */
+:root {
+  --color-ink: #0B0B0E;
+  --color-off-white: #F6F5F2;
+  --color-neon-mint: #35FFD1;
+  --color-cool-gray: #A7A7B0;
+  --font-serif: 'Playfair Display', serif;
+  --font-sans: 'Inter', 'Poppins', sans-serif;
+}
+
+.collection-main {
+  background: var(--color-off-white);
+  min-height: calc(100vh - 80px);
+  padding: 6rem 0 6rem 0;
+  position: relative;
+}
+
+.collection-main > .container {
+  position: relative;
+  z-index: 1;
+}
+
+/* Collection Header - React App Pattern */
+.collection-header {
+  text-align: center;
+  margin-bottom: 6rem;
+  padding-bottom: 3rem;
+  border-bottom: 1px solid rgba(11, 11, 14, 0.1);
+  position: relative;
+  background-image: url('../assets/girl-nameit.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  padding-top: 6rem;
+  color: white;
+}
+
+.collection-header::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: -1;
+}
+
+.collection-title {
+  font-family: var(--font-serif);
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: 700;
+  color: var(--color-neon-mint);
+  margin-bottom: 1rem;
+  letter-spacing: -1px;
+  font-style: italic;
+}
+
+.collection-subtitle {
+  font-family: var(--font-sans);
+  font-size: clamp(1rem, 2vw, 1.25rem);
+  color: white;
+  max-width: 600px;
+  margin: 0 auto;
+  font-weight: 400;
+  line-height: 1.6;
+}
+
+/* Loading State - React App Pattern */
+.collection-loading {
+  text-align: center;
+  padding: 6rem 20px;
+  color: var(--color-cool-gray);
+}
+
+.loading-spinner {
+  width: 50px;
+  height: 50px;
+  border: 4px solid rgba(11, 11, 14, 0.1);
+  border-top: 4px solid var(--color-neon-mint);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 0 auto 20px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.collection-loading p {
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  color: var(--color-cool-gray);
+}
+
+/* Collection Sections - React App Pattern */
+.collection-section {
+  margin-bottom: 6rem;
+}
+
+.collection-section .section-title {
+  font-family: var(--font-serif);
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 700;
+  color: var(--color-ink);
+  margin-bottom: 3rem;
+  text-align: left;
+  font-style: italic;
+  letter-spacing: -0.5px;
+}
+
+/* Products Grid - React App Pattern */
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2rem;
+  margin-bottom: 3rem;
+}
+
+/* Product Card Styles - React App Pattern */
+.products-grid .product-card {
+  background: var(--color-off-white);
+  border-radius: 0;
+  border: 1px solid rgba(11, 11, 14, 0.05);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.7s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+  position: relative;
+}
+
+.products-grid .product-card:hover {
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: 0 8px 24px rgba(11, 11, 14, 0.1);
+}
+
+.products-grid .product-card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.7s ease;
+}
+
+.products-grid .product-card:hover img {
+  transform: scale(1.05);
+}
+
+.products-grid .product-info {
+  padding: 1.5rem 1rem 1rem 1rem;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  background: var(--color-off-white);
+}
+
+.products-grid .product-title {
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--color-ink);
+  margin-bottom: 0.5rem;
+  min-height: 40px;
+  line-height: 1.4;
+}
+
+.products-grid .product-description {
+  font-family: var(--font-sans);
+  font-size: 0.8rem;
+  font-weight: 400;
+  color: var(--color-cool-gray);
+  line-height: 1.6;
+  margin-bottom: 1rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-height: 40px;
+  max-height: 40px;
+}
+
+.products-grid .product-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: auto;
+}
+
+.products-grid .product-price {
+  font-family: var(--font-serif);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--color-ink);
+  font-style: italic;
+}
+
+.products-grid .add-cart {
+  background: var(--color-off-white);
+  color: var(--color-ink);
+  border: 1px solid rgba(11, 11, 14, 0.2);
+  border-radius: 50%;
+  width: 38px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.products-grid .add-cart:hover {
+  background: var(--color-neon-mint);
+  border-color: var(--color-neon-mint);
+  transform: scale(1.1);
+}
+
+.products-grid .add-cart i {
+  position: relative;
+  z-index: 1;
+}
+
+/* Popular Badge - React App Pattern */
+.product-badge-popular {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: var(--color-neon-mint);
+  color: var(--color-ink);
+  padding: 6px 14px;
+  border-radius: 0;
+  font-size: 0.625rem;
+  font-weight: 700;
+  font-family: var(--font-sans);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  z-index: 2;
+  border: none;
+}
+
+/* Empty State - React App Pattern */
+.collection-empty {
+  text-align: center;
+  padding: 6rem 20px;
+  color: var(--color-cool-gray);
+}
+
+.collection-empty i {
+  font-size: 4rem;
+  color: var(--color-cool-gray);
+  margin-bottom: 2rem;
+  opacity: 0.5;
+}
+
+.collection-empty h3 {
+  font-family: var(--font-serif);
+  font-size: 1.8rem;
+  color: var(--color-ink);
+  margin-bottom: 1rem;
+  font-style: italic;
+}
+
+.collection-empty p {
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  color: var(--color-cool-gray);
+}
+
+/* Responsive Design - React App Pattern */
+@media (max-width: 1200px) {
+  .products-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+}
+
+@media (max-width: 1024px) {
+  .products-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+  
+  .collection-header {
+    margin-bottom: 4rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .products-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+  
+  .collection-main {
+    padding: 4rem 0 4rem 0;
+  }
+  
+  .collection-header {
+    margin-bottom: 4rem;
+    padding-bottom: 2rem;
+  }
+  
+  .collection-section {
+    margin-bottom: 4rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .products-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+  
+  .products-grid .product-card img {
+    height: 160px;
+  }
+  
+  .products-grid .product-info {
+    padding: 1rem 0.875rem 0.75rem 0.875rem;
+  }
+  
+  .products-grid .product-title {
+    font-size: 0.8rem;
+    min-height: 36px;
+  }
+  
+  .products-grid .product-description {
+    font-size: 0.75rem;
+    min-height: 36px;
+    max-height: 36px;
+    -webkit-line-clamp: 2;
+  }
+  
+  .products-grid .product-price {
+    font-size: 0.9rem;
+  }
+  
+  .products-grid .add-cart {
+    width: 32px;
+    height: 32px;
+    font-size: 0.85rem;
+  }
+  
+  .collection-main {
+    padding: 4rem 0 4rem 0;
+  }
+  
+  .collection-header {
+    margin-bottom: 3rem;
+    padding-bottom: 2rem;
+  }
+  
+  .collection-section {
+    margin-bottom: 3rem;
+  }
+}
+

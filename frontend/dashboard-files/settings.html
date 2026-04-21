@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account Settings - NAME IT SCENTS</title>
+    <link rel="stylesheet" href="../css/styles.css">
+  <link rel="stylesheet" href="./settings.css">
+  <link rel="stylesheet" href="../css/cart.css">
+  <link rel="stylesheet" href="../css/chatbot.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="settings-body">
+    <!-- Navigation -->
+    <nav class="settings-navbar">
+        <div class="nav-container">
+            <div class="nav-left">
+                <a href="./user-profile.html" class="back-btn">
+                    <i class="fas fa-arrow-left"></i>
+                    <span>Back</span>
+                </a>
+            </div>
+            <div class="nav-logo">
+                <h1>NAMEIT</h1>
+            </div>
+            <div class="nav-right">
+                <a href="./user-dashboard.html" class="nav-link">
+                    <i class="fas fa-shopping-bag"></i>
+                    <span>Shop</span>
+                </a>
+            </div>
+    </div>
+  </nav>
+
+    <!-- Main Content -->
+    <main class="settings-main">
+        <div class="settings-container">
+            <!-- Page Header -->
+            <div class="settings-header">
+                <h1>Account Settings</h1>
+                <p>Manage your profile, security, and preferences</p>
+            </div>
+
+            <!-- Settings Sections -->
+            <div class="settings-content">
+                <!-- Profile Information Section -->
+                <section class="settings-section">
+                    <div class="section-header">
+                        <div class="section-icon">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="section-title">
+                            <h2>Profile Information</h2>
+                            <p>Update your personal details</p>
+                        </div>
+                    </div>
+                    <div class="section-body">
+                        <div class="avatar-section">
+                            <div class="avatar-preview">
+                                <img id="settingsAvatar" src="../assets/Stoofperen.jpg" alt="Profile">
+                                <button type="button" class="avatar-edit-btn" onclick="document.getElementById('avatarInput').click()">
+                                    <i class="fas fa-camera"></i>
+                                </button>
+                            </div>
+                            <input type="file" id="avatarInput" accept="image/*" style="display: none;">
+                            <div class="avatar-info">
+                                <p>Upload a new profile photo</p>
+                                <span class="text-muted">JPG, PNG or GIF. Max 5MB</span>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="settingsName">Full Name</label>
+                                <input type="text" id="settingsName" placeholder="Enter your name">
+                            </div>
+                            <div class="form-group">
+                                <label for="settingsEmail">Email Address</label>
+                                <input type="email" id="settingsEmail" placeholder="your@email.com" disabled>
+                                <span class="input-hint">Email cannot be changed</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="settingsPhone">Phone Number</label>
+                            <input type="tel" id="settingsPhone" placeholder="+1 (555) 123-4567">
+                        </div>
+                        <button type="button" id="saveProfileBtn" class="btn btn-primary">
+                            <i class="fas fa-save"></i>
+                            Save Profile
+                        </button>
+                    </div>
+                </section>
+
+                <!-- Address Section -->
+                <section class="settings-section">
+                    <div class="section-header">
+                        <div class="section-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <div class="section-title">
+                            <h2>Address & Location</h2>
+                            <p>Manage your shipping address</p>
+                        </div>
+                    </div>
+                    <div class="section-body">
+                        <div class="form-group">
+                            <label for="settingsAddress">Street Address</label>
+                            <input type="text" id="settingsAddress" placeholder="123 Main Street">
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="settingsCity">City</label>
+                                <input type="text" id="settingsCity" placeholder="New York">
+                            </div>
+                            <div class="form-group">
+                                <label for="settingsState">State / Province</label>
+                                <input type="text" id="settingsState" placeholder="NY">
+                            </div>
+                        </div>
+                        <div class="form-row">
+      <div class="form-group">
+                                <label for="settingsZipCode">ZIP / Postal Code</label>
+                                <input type="text" id="settingsZipCode" placeholder="10001">
+      </div>
+      <div class="form-group">
+                                <label for="settingsCountry">Country</label>
+                                <input type="text" id="settingsCountry" placeholder="United States">
+                            </div>
+                        </div>
+                        <button type="button" id="saveAddressBtn" class="btn btn-primary">
+                            <i class="fas fa-save"></i>
+                            Save Address
+                        </button>
+                    </div>
+                </section>
+
+                <!-- Security Section -->
+                <section class="settings-section">
+                    <div class="section-header">
+                        <div class="section-icon">
+                            <i class="fas fa-lock"></i>
+                        </div>
+                        <div class="section-title">
+                            <h2>Security</h2>
+                            <p>Manage your password and security settings</p>
+                        </div>
+                    </div>
+                    <div class="section-body">
+                        <div class="form-group">
+                            <label for="currentPassword">Current Password</label>
+                            <div class="password-input">
+                                <input type="password" id="currentPassword" placeholder="Enter current password">
+                                <button type="button" class="toggle-password" data-target="currentPassword">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="newPassword">New Password</label>
+                                <div class="password-input">
+                                    <input type="password" id="newPassword" placeholder="Enter new password">
+                                    <button type="button" class="toggle-password" data-target="newPassword">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                </div>
+                                <span class="input-hint">Minimum 6 characters</span>
+      </div>
+      <div class="form-group">
+                                <label for="confirmPassword">Confirm New Password</label>
+                                <div class="password-input">
+                                    <input type="password" id="confirmPassword" placeholder="Confirm new password">
+                                    <button type="button" class="toggle-password" data-target="confirmPassword">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="button" id="changePasswordBtn" class="btn btn-primary">
+                            <i class="fas fa-key"></i>
+                            Change Password
+                        </button>
+                    </div>
+                </section>
+
+                <!-- Danger Zone Section -->
+                <section class="settings-section danger-zone">
+                    <div class="section-header">
+                        <div class="section-icon danger">
+                            <i class="fas fa-exclamation-triangle"></i>
+                        </div>
+                        <div class="section-title">
+                            <h2>Danger Zone</h2>
+                            <p>Irreversible actions - proceed with caution</p>
+                        </div>
+                    </div>
+                    <div class="section-body">
+                        <div class="danger-action">
+                            <div class="danger-info">
+                                <h4>Delete Account</h4>
+                                <p>Permanently delete your account and all associated data. This action cannot be undone.</p>
+                            </div>
+                            <button type="button" id="deleteAccountBtn" class="btn btn-danger">
+                                <i class="fas fa-trash-alt"></i>
+                                Delete Account
+                            </button>
+                        </div>
+                    </div>
+                </section>
+            </div>
+      </div>
+  </main>
+
+    <!-- Delete Account Modal -->
+    <div id="deleteModal" class="modal">
+        <div class="modal-overlay"></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-exclamation-triangle"></i> Delete Account</h3>
+                <button type="button" class="modal-close" id="closeDeleteModal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p class="warning-text">This action is permanent and cannot be undone. All your data will be permanently deleted.</p>
+                <div class="form-group">
+                    <label for="deletePassword">Enter your password to confirm</label>
+                    <input type="password" id="deletePassword" placeholder="Your password">
+                </div>
+                <div class="form-group">
+                    <label for="deleteConfirm">Type <strong>DELETE</strong> to confirm</label>
+                    <input type="text" id="deleteConfirm" placeholder="Type DELETE">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" id="cancelDeleteBtn">Cancel</button>
+                <button type="button" class="btn btn-danger" id="confirmDeleteBtn">
+                    <i class="fas fa-trash-alt"></i>
+                    Delete My Account
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast">
+        <div class="toast-icon">
+            <i class="fas fa-check-circle"></i>
+        </div>
+        <div class="toast-message"></div>
+        <button class="toast-close">
+            <i class="fas fa-times"></i>
+        </button>
+    </div>
+
+    <!-- Scripts -->
+    <script src="../js/api.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/cart.js"></script>
+    <script src="../js/settings.js"></script>
+    <script src="../js/tash-chatbot.js"></script>
+
+    <!-- TASH AI Chatbot -->
+    <div class="chatbot-container" id="tashChatbot">
+        <div class="chatbot-toggle" id="chatbotToggle">
+            <i class="fas fa-comments"></i>
+            <span class="chatbot-label">Chat with TASH</span>
+        </div>
+        <div class="chatbot-window" id="chatbotWindow">
+            <div class="chatbot-header">
+                <div class="chatbot-title">
+                    <i class="fas fa-robot"></i>
+                    <span>TASH - AI Assistant</span>
+                </div>
+                <div class="chatbot-header-controls">
+                    <button class="chatbot-voice-toggle" id="chatbotVoiceToggle" title="Voice Off">
+                        <i class="fas fa-volume-mute"></i>
+                    </button>
+                    <button class="chatbot-close" id="chatbotClose" title="Close">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="speaking-indicator" id="speakingIndicator">
+                <i class="fas fa-volume-up"></i>
+                <span>TASH is speaking...</span>
+            </div>
+            <div class="chatbot-messages" id="chatbotMessages">
+                <div class="message bot-message">
+                    <div class="message-avatar"><i class="fas fa-robot"></i></div>
+                    <div class="message-content">
+                        <p>Hello! I'm TASH, your AI assistant. How can I help you today?</p>
+                    </div>
+                </div>
+            </div>
+            <div class="chatbot-input">
+                <input type="text" id="chatbotInput" placeholder="Type or speak...">
+                <button class="chatbot-mic" id="chatbotMic" title="Voice Input"><i class="fas fa-microphone"></i></button>
+                <button class="chatbot-send" id="chatbotSend" title="Send"><i class="fas fa-paper-plane"></i></button>
+            </div>
+        </div>
+    </div>
+</body>
+</html> 

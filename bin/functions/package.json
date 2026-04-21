@@ -1,0 +1,16 @@
+{
+  "name": "nameit-cloud-functions",
+  "description": "Firebase Cloud Functions for NAME IT SCENTS",
+  "engines": {
+    "node": "18"
+  },
+  "main": "index.js",
+  "dependencies": {
+    "axios": "^1.13.2",
+    "firebase-admin": "^11.11.1",
+    "firebase-functions": "^4.7.0",
+    "node-fetch": "^3.3.2"
+  }
+}
+
+

@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Orders - NAME IT SCENTS</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/cart.css">
+    <link rel="stylesheet" href="../css/chatbot.css">
+    <link rel="stylesheet" href="user-profile.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .orders-page {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            min-height: calc(100vh - 80px);
+            padding: 40px 20px;
+        }
+
+        .orders-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .orders-header {
+            margin-bottom: 30px;
+        }
+
+        .orders-header h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            font-weight: 700;
+            color: #111;
+            margin-bottom: 8px;
+        }
+
+        .orders-header p {
+            color: #666;
+            font-size: 1rem;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: #14b8a6;
+            text-decoration: none;
+            font-weight: 500;
+            margin-bottom: 20px;
+            transition: color 0.2s;
+        }
+
+        .back-link:hover {
+            color: #0d9488;
+        }
+
+        .orders-list-full {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .order-card {
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+            overflow: hidden;
+        }
+
+        .order-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 20px;
+            background: #f9fafb;
+            border-bottom: 1px solid #e5e7eb;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .order-card-header .order-id {
+            font-weight: 700;
+            color: #111;
+            font-size: 1.1rem;
+        }
+
+        .order-card-header .order-date {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .order-card-body {
+            padding: 20px;
+        }
+
+        .order-items-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .order-item-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px;
+            background: #f9fafb;
+            border-radius: 8px;
+        }
+
+        .order-item-row img {
+            width: 50px;
+            height: 50px;
+            border-radius: 8px;
+            object-fit: cover;
+        }
+
+        .order-item-details {
+            flex: 1;
+        }
+
+        .order-item-details h4 {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: #111;
+            margin-bottom: 4px;
+        }
+
+        .order-item-details p {
+            font-size: 0.85rem;
+            color: #666;
+        }
+
+        .order-item-price {
+            font-weight: 600;
+            color: #111;
+        }
+
+        .order-card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 16px;
+            border-top: 1px solid #e5e7eb;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .order-total {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #111;
+        }
+
+        .order-total span {
+            color: #666;
+            font-weight: 400;
+            font-size: 0.9rem;
+        }
+
+        .empty-orders {
+            text-align: center;
+            padding: 60px 20px;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+        }
+
+        .empty-orders i {
+            font-size: 4rem;
+            color: #d1d5db;
+            margin-bottom: 20px;
+        }
+
+        .empty-orders h3 {
+            font-size: 1.3rem;
+            color: #111;
+            margin-bottom: 8px;
+        }
+
+        .empty-orders p {
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .empty-orders a {
+            display: inline-block;
+            padding: 12px 24px;
+            background: #14b8a6;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: background 0.2s;
+        }
+
+        .empty-orders a:hover {
+            background: #0d9488;
+        }
+
+        .loading-orders {
+            text-align: center;
+            padding: 40px;
+            color: #666;
+        }
+
+        .loading-orders i {
+            font-size: 2rem;
+            margin-bottom: 12px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* Order breakdown */
+        .order-breakdown {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .order-detail-row {
+            font-size: 0.9rem;
+            color: #666;
+            display: flex;
+            gap: 8px;
+        }
+
+        .order-detail-row span {
+            color: #999;
+        }
+
+        .order-detail-row.discount {
+            color: #059669;
+        }
+
+        .order-detail-row.discount i {
+            margin-right: 4px;
+        }
+
+        @media (max-width: 600px) {
+            .order-card-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .order-card-footer {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+<body class="modern-body">
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container nav-flex">
+            <button class="hamburger" type="button" aria-label="Toggle navigation" aria-expanded="false">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <div class="nav-logo">
+                <h1 style="font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; font-style: italic; color: #0B0B0E; letter-spacing: -0.5px; margin: 0;">NAMEIT</h1>
+            </div>
+           
+            <a href="./user-profile.html" class="action-btn">Back to Profile</a>
+            
+            <div class="nav-right">
+                <div class="user-menu">
+                    <div class="user-avatar">
+                        <img id="navAvatar" src="../assets/Stoofperen.jpg" alt="User Avatar">
+                        <span class="user-name" id="navUserName">--</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="dropdown-menu">
+                        <a href="./user-profile.html" class="dropdown-item"><i class="fas fa-user"></i> My Profile</a>
+                        <a href="./orders.html" class="dropdown-item active"><i class="fas fa-shopping-bag"></i> My Orders</a>
+                        <a href="./settings.html" class="dropdown-item"><i class="fas fa-cog"></i> Settings</a>
+                        <a href="#" class="dropdown-item" onclick="logout(); return false;"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Orders Page -->
+    <section class="orders-page">
+        <div class="orders-container">
+            <a href="./user-profile.html" class="back-link">
+                <i class="fas fa-arrow-left"></i>
+                Back to Profile
+            </a>
+
+            <div class="orders-header">
+                <h1>My Orders</h1>
+                <p>View all your orders and track their status</p>
+            </div>
+
+            <div class="orders-list-full" id="ordersListFull">
+                <div class="loading-orders">
+                    <i class="fas fa-spinner"></i>
+                    <p>Loading your orders...</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Scripts -->
+    <script src="../js/api.js"></script>
+    <script src="../js/auth.js"></script>
+    <script>
+        // Initialize orders page
+        document.addEventListener('DOMContentLoaded', () => {
+            initOrdersPage();
+        });
+
+        async function initOrdersPage() {
+            // Wait for API client
+            let attempts = 0;
+            while (!window.apiClient && attempts < 20) {
+                await new Promise(r => setTimeout(r, 300));
+                attempts++;
+            }
+
+            if (!window.apiClient) {
+                showError('Failed to connect to server');
+                return;
+            }
+
+            // Check authentication
+            if (!window.apiClient.isAuthenticated()) {
+                window.location.href = '../login.html';
+                return;
+            }
+
+            // Load user info for nav
+            try {
+                const response = await window.apiClient.getCurrentUser();
+                if (response && response.user) {
+                    const user = response.user;
+                    const navUserName = document.getElementById('navUserName');
+                    const navAvatar = document.getElementById('navAvatar');
+                    
+                    if (navUserName) navUserName.textContent = user.name || 'User';
+                    if (navAvatar && user.avatarUrl) {
+                        navAvatar.src = user.avatarUrl;
+                        navAvatar.onerror = () => { navAvatar.src = '../assets/Stoofperen.jpg'; };
+                    }
+                }
+            } catch (error) {
+                console.error('Error loading user:', error);
+            }
+
+            // Load orders
+            await loadAllOrders();
+        }
+
+        async function loadAllOrders() {
+            const container = document.getElementById('ordersListFull');
+            
+            try {
+                const response = await window.apiClient.getOrders();
+                const orders = response.orders || [];
+
+                if (orders.length === 0) {
+                    container.innerHTML = `
+                        <div class="empty-orders">
+                            <i class="fas fa-shopping-bag"></i>
+                            <h3>No orders yet</h3>
+                            <p>Start shopping to see your orders here</p>
+                            <a href="./user-dashboard.html">Browse Products</a>
+                        </div>
+                    `;
+                    return;
+                }
+
+                // Orders are already sorted by most recent from backend
+                container.innerHTML = orders.map(order => createOrderCard(order)).join('');
+            } catch (error) {
+                console.error('Error loading orders:', error);
+                container.innerHTML = `
+                    <div class="empty-orders">
+                        <i class="fas fa-exclamation-circle"></i>
+                        <h3>Could not load orders</h3>
+                        <p>Please try refreshing the page</p>
+                    </div>
+                `;
+            }
+        }
+
+        function createOrderCard(order) {
+            const orderId = order.orderId || order.id || 'Unknown';
+            const displayId = orderId.startsWith('ORD-') ? orderId : `#${orderId.slice(-8).toUpperCase()}`;
+            const status = order.status || 'pending';
+            const statusClass = getStatusClass(status);
+            const statusLabel = getStatusLabel(status);
+            const statusIcon = getStatusIcon(status);
+            const date = formatDate(order.createdAt);
+            const total = formatCurrency(order.totalAmount);
+            const pointsDiscount = order.pointsDiscount || 0;
+
+            const items = order.items || [];
+            const itemsHtml = items.map(item => `
+                <div class="order-item-row">
+                    <img src="${item.imageUrl || 'https://via.placeholder.com/50?text=Product'}" 
+                         alt="${item.name || 'Product'}" 
+                         onerror="this.src='https://via.placeholder.com/50?text=Product'">
+                    <div class="order-item-details">
+                        <h4>${item.name || item.title || 'Product'}</h4>
+                        <p>Qty: ${item.quantity || 1} × ${formatCurrency(item.price)}</p>
+                    </div>
+                    <div class="order-item-price">${formatCurrency((item.price || 0) * (item.quantity || 1))}</div>
+                </div>
+            `).join('');
+
+            const subtotal = order.subtotal || 0;
+            const shipping = order.shipping || 0;
+            const tax = order.tax || 0;
+            
+            const discountHtml = pointsDiscount > 0 
+                ? `<div class="order-detail-row discount"><i class="fas fa-gift"></i> Points discount: -${formatCurrency(pointsDiscount)}</div>` 
+                : '';
+
+            return `
+                <div class="order-card">
+                    <div class="order-card-header">
+                        <div>
+                            <div class="order-id">${displayId}</div>
+                            <div class="order-date">${date}</div>
+                        </div>
+                        <div class="order-status ${statusClass}">
+                            <i class="fas ${statusIcon}"></i>
+                            ${statusLabel}
+                        </div>
+                    </div>
+                    <div class="order-card-body">
+                        <div class="order-items-list">
+                            ${itemsHtml}
+                        </div>
+                        <div class="order-card-footer">
+                            <div class="order-breakdown">
+                                <div class="order-detail-row"><span>Subtotal:</span> ${formatCurrency(subtotal)}</div>
+                                <div class="order-detail-row"><span>Shipping:</span> ${shipping === 0 ? 'FREE' : formatCurrency(shipping)}</div>
+                                <div class="order-detail-row"><span>Tax:</span> ${formatCurrency(tax)}</div>
+                                ${discountHtml}
+                            </div>
+                            <div class="order-total">
+                                <span>Total:</span> ${total}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function getStatusClass(status) {
+            const map = {
+                pending: 'status-pending',
+                received: 'status-received',
+                dispatched: 'status-dispatched',
+                delivered: 'status-delivered',
+                processing: 'status-received',
+                shipped: 'status-dispatched',
+                cancelled: 'status-cancelled',
+            };
+            return map[status?.toLowerCase()] || 'status-pending';
+        }
+
+        function getStatusLabel(status) {
+            const map = {
+                pending: 'Pending',
+                received: 'Received',
+                dispatched: 'Dispatched',
+                delivered: 'Delivered',
+                processing: 'Processing',
+                shipped: 'Shipped',
+                cancelled: 'Cancelled',
+            };
+            return map[status?.toLowerCase()] || 'Pending';
+        }
+
+        function getStatusIcon(status) {
+            const map = {
+                pending: 'fa-clock',
+                received: 'fa-check',
+                dispatched: 'fa-truck',
+                delivered: 'fa-check-circle',
+                processing: 'fa-spinner',
+                shipped: 'fa-truck',
+                cancelled: 'fa-times-circle',
+            };
+            return map[status?.toLowerCase()] || 'fa-clock';
+        }
+
+        function formatDate(dateString) {
+            if (!dateString) return 'Unknown date';
+            try {
+                const date = new Date(dateString);
+                return date.toLocaleDateString('en-US', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric',
+                });
+            } catch {
+                return 'Unknown date';
+            }
+        }
+
+        function formatCurrency(amount) {
+            if (amount === undefined || amount === null) return '₦0.00';
+            const num = parseFloat(amount);
+            if (isNaN(num)) return '₦0.00';
+            return new Intl.NumberFormat('en-NG', {
+                style: 'currency',
+                currency: 'NGN',
+            }).format(num);
+        }
+
+        function showError(message) {
+            const container = document.getElementById('ordersListFull');
+            container.innerHTML = `
+                <div class="empty-orders">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <h3>Error</h3>
+                    <p>${message}</p>
+                </div>
+            `;
+        }
+    </script>
+    <script src="../js/tash-chatbot.js"></script>
+
+    <!-- TASH AI Chatbot -->
+    <div class="chatbot-container" id="tashChatbot">
+        <div class="chatbot-toggle" id="chatbotToggle">
+            <i class="fas fa-comments"></i>
+            <span class="chatbot-label">Chat with TASH</span>
+        </div>
+        <div class="chatbot-window" id="chatbotWindow">
+            <div class="chatbot-header">
+                <div class="chatbot-title">
+                    <i class="fas fa-robot"></i>
+                    <span>TASH - AI Assistant</span>
+                </div>
+                <div class="chatbot-header-controls">
+                    <button class="chatbot-voice-toggle" id="chatbotVoiceToggle" title="Voice Off">
+                        <i class="fas fa-volume-mute"></i>
+                    </button>
+                    <button class="chatbot-close" id="chatbotClose" title="Close">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="speaking-indicator" id="speakingIndicator">
+                <i class="fas fa-volume-up"></i>
+                <span>TASH is speaking...</span>
+            </div>
+            <div class="chatbot-messages" id="chatbotMessages">
+                <div class="message bot-message">
+                    <div class="message-avatar"><i class="fas fa-robot"></i></div>
+                    <div class="message-content">
+                        <p>Hello! I'm TASH, your AI assistant. How can I help you today?</p>
+                    </div>
+                </div>
+            </div>
+            <div class="chatbot-input">
+                <input type="text" id="chatbotInput" placeholder="Type or speak...">
+                <button class="chatbot-mic" id="chatbotMic" title="Voice Input"><i class="fas fa-microphone"></i></button>
+                <button class="chatbot-send" id="chatbotSend" title="Send"><i class="fas fa-paper-plane"></i></button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

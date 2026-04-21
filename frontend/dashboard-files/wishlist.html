@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Wishlist - NAME IT SCENTS</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/cart.css">
+    <link rel="stylesheet" href="../css/chatbot.css">
+    <link rel="stylesheet" href="user-profile.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .wishlist-page {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            min-height: calc(100vh - 80px);
+            padding: 40px 20px;
+        }
+
+        .wishlist-container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .wishlist-header {
+            margin-bottom: 30px;
+        }
+
+        .wishlist-header h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            font-weight: 700;
+            color: #111;
+            margin-bottom: 8px;
+        }
+
+        .wishlist-header p {
+            color: #666;
+            font-size: 1rem;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: #14b8a6;
+            text-decoration: none;
+            font-weight: 500;
+            margin-bottom: 20px;
+            transition: color 0.2s;
+        }
+
+        .back-link:hover {
+            color: #0d9488;
+        }
+
+        .wishlist-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 24px;
+        }
+
+        .wishlist-item {
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+            overflow: hidden;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .wishlist-item:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+        }
+
+        .wishlist-item-image {
+            position: relative;
+            height: 200px;
+            overflow: hidden;
+            background: #f5f5f5;
+        }
+
+        .wishlist-item-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s;
+        }
+
+        .wishlist-item:hover .wishlist-item-image img {
+            transform: scale(1.05);
+        }
+
+        .wishlist-item-info {
+            padding: 16px;
+        }
+
+        .wishlist-item-name {
+            font-weight: 600;
+            color: #111;
+            font-size: 1rem;
+            margin-bottom: 4px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .wishlist-item-price {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #14b8a6;
+            margin-bottom: 12px;
+        }
+
+        .wishlist-item-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .wishlist-item-actions button {
+            flex: 1;
+            padding: 10px 16px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .add-to-cart-btn {
+            background: #14b8a6;
+            color: #fff;
+            border: none;
+        }
+
+        .add-to-cart-btn:hover {
+            background: #0d9488;
+        }
+
+        .remove-btn {
+            background: #fff;
+            color: #ef4444;
+            border: 2px solid #ef4444;
+        }
+
+        .remove-btn:hover {
+            background: #fef2f2;
+        }
+
+        .empty-wishlist {
+            text-align: center;
+            padding: 60px 20px;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+        }
+
+        .empty-wishlist i {
+            font-size: 4rem;
+            color: #d1d5db;
+            margin-bottom: 20px;
+        }
+
+        .empty-wishlist h3 {
+            font-size: 1.3rem;
+            color: #111;
+            margin-bottom: 8px;
+        }
+
+        .empty-wishlist p {
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .empty-wishlist a {
+            display: inline-block;
+            padding: 12px 24px;
+            background: #14b8a6;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: background 0.2s;
+        }
+
+        .empty-wishlist a:hover {
+            background: #0d9488;
+        }
+
+        .loading-wishlist {
+            text-align: center;
+            padding: 40px;
+            color: #666;
+        }
+
+        .loading-wishlist i {
+            font-size: 2rem;
+            margin-bottom: 12px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        @media (max-width: 600px) {
+            .wishlist-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .wishlist-item-actions {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body class="modern-body">
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container nav-flex">
+            <button class="hamburger" type="button" aria-label="Toggle navigation" aria-expanded="false">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <div class="nav-logo">
+                <h1 style="font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; font-style: italic; color: #0B0B0E; letter-spacing: -0.5px; margin: 0;">NAMEIT</h1>
+            </div>
+           
+            <a href="./user-profile.html" class="action-btn">Back to Profile</a>
+            
+            <div class="nav-right">
+                <div class="user-menu">
+                    <div class="user-avatar">
+                        <img id="navAvatar" src="../assets/Stoofperen.jpg" alt="User Avatar">
+                        <span class="user-name" id="navUserName">--</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="dropdown-menu">
+                        <a href="./user-profile.html" class="dropdown-item"><i class="fas fa-user"></i> My Profile</a>
+                        <a href="./orders.html" class="dropdown-item"><i class="fas fa-shopping-bag"></i> My Orders</a>
+                        <a href="./wishlist.html" class="dropdown-item active"><i class="fas fa-heart"></i> Wishlist</a>
+                        <a href="./settings.html" class="dropdown-item"><i class="fas fa-cog"></i> Settings</a>
+                        <a href="#" class="dropdown-item" onclick="logout(); return false;"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Wishlist Page -->
+    <section class="wishlist-page">
+        <div class="wishlist-container">
+            <a href="./user-profile.html" class="back-link">
+                <i class="fas fa-arrow-left"></i>
+                Back to Profile
+            </a>
+
+            <div class="wishlist-header">
+                <h1>My Wishlist</h1>
+                <p id="wishlistCount">Loading...</p>
+            </div>
+
+            <div class="wishlist-grid" id="wishlistGrid">
+                <div class="loading-wishlist">
+                    <i class="fas fa-spinner"></i>
+                    <p>Loading your wishlist...</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Scripts -->
+    <script src="../js/api.js"></script>
+    <script src="../js/cart.js"></script>
+    <script src="../js/auth.js"></script>
+    <script>
+        // Initialize wishlist page
+        document.addEventListener('DOMContentLoaded', () => {
+            initWishlistPage();
+        });
+
+        async function initWishlistPage() {
+            // Wait for API client
+            let attempts = 0;
+            while (!window.apiClient && attempts < 20) {
+                await new Promise(r => setTimeout(r, 300));
+                attempts++;
+            }
+
+            if (!window.apiClient) {
+                showError('Failed to connect to server');
+                return;
+            }
+
+            // Check authentication
+            if (!window.apiClient.isAuthenticated()) {
+                window.location.href = '../login.html';
+                return;
+            }
+
+            // Load user info for nav
+            try {
+                const response = await window.apiClient.getCurrentUser();
+                if (response && response.user) {
+                    const user = response.user;
+                    const navUserName = document.getElementById('navUserName');
+                    const navAvatar = document.getElementById('navAvatar');
+                    
+                    if (navUserName) navUserName.textContent = user.name || 'User';
+                    if (navAvatar && user.avatarUrl) {
+                        navAvatar.src = user.avatarUrl;
+                        navAvatar.onerror = () => { navAvatar.src = '../assets/Stoofperen.jpg'; };
+                    }
+                }
+            } catch (error) {
+                console.error('Error loading user:', error);
+            }
+
+            // Load wishlist
+            await loadWishlist();
+        }
+
+        async function loadWishlist() {
+            const grid = document.getElementById('wishlistGrid');
+            const countEl = document.getElementById('wishlistCount');
+            
+            try {
+                const response = await window.apiClient.getWishlist();
+                const wishlist = response.wishlist || [];
+
+                if (countEl) {
+                    countEl.textContent = `${wishlist.length} item${wishlist.length !== 1 ? 's' : ''} in your wishlist`;
+                }
+
+                if (wishlist.length === 0) {
+                    grid.innerHTML = `
+                        <div class="empty-wishlist" style="grid-column: 1 / -1;">
+                            <i class="fas fa-heart"></i>
+                            <h3>Your wishlist is empty</h3>
+                            <p>Save items you love by clicking the heart icon on products</p>
+                            <a href="./user-dashboard.html">Browse Products</a>
+                        </div>
+                    `;
+                    return;
+                }
+
+                grid.innerHTML = wishlist.map(item => createWishlistCard(item)).join('');
+
+                // Add event listeners
+                grid.querySelectorAll('.add-to-cart-btn').forEach(btn => {
+                    btn.addEventListener('click', () => handleAddToCart(btn));
+                });
+
+                grid.querySelectorAll('.remove-btn').forEach(btn => {
+                    btn.addEventListener('click', () => handleRemove(btn));
+                });
+
+            } catch (error) {
+                console.error('Error loading wishlist:', error);
+                grid.innerHTML = `
+                    <div class="empty-wishlist" style="grid-column: 1 / -1;">
+                        <i class="fas fa-exclamation-circle"></i>
+                        <h3>Could not load wishlist</h3>
+                        <p>Please try refreshing the page</p>
+                    </div>
+                `;
+            }
+        }
+
+        function createWishlistCard(item) {
+            const product = item.product || {};
+            const productId = product.id || item.productId;
+            const name = product.title || product.name || 'Product';
+            const price = product.price || 0;
+            const imageUrl = product.imageUrl || 'https://via.placeholder.com/300?text=No+Image';
+
+            return `
+                <div class="wishlist-item" data-product-id="${productId}">
+                    <div class="wishlist-item-image">
+                        <img src="${imageUrl}" alt="${name}" onerror="this.src='https://via.placeholder.com/300?text=No+Image'">
+                    </div>
+                    <div class="wishlist-item-info">
+                        <div class="wishlist-item-name">${name}</div>
+                        <div class="wishlist-item-price">${formatCurrency(price)}</div>
+                        <div class="wishlist-item-actions">
+                            <button class="add-to-cart-btn" data-product='${JSON.stringify(product).replace(/'/g, "&#39;")}'>
+                                <i class="fas fa-shopping-cart"></i>
+                                Add to Cart
+                            </button>
+                            <button class="remove-btn" data-product-id="${productId}">
+                                <i class="fas fa-trash"></i>
+                                Remove
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        async function handleAddToCart(btn) {
+            try {
+                const productData = btn.getAttribute('data-product');
+                const product = JSON.parse(productData);
+                const productName = product.title || product.name || 'Item';
+                
+                if (window.addToCart) {
+                    window.addToCart(product);
+                    // Show explicit notification for wishlist page
+                    if (window.showCartNotification) {
+                        window.showCartNotification(`${productName} added to cart!`, 'success');
+                    }
+                } else {
+                    if (window.showCartNotification) {
+                        window.showCartNotification('Cart system not available', 'error');
+                    }
+                }
+            } catch (error) {
+                console.error('Error adding to cart:', error);
+                if (window.showCartNotification) {
+                    window.showCartNotification('Failed to add item to cart', 'error');
+                }
+            }
+        }
+
+        async function handleRemove(btn) {
+            const productId = btn.getAttribute('data-product-id');
+            const card = btn.closest('.wishlist-item');
+            
+            try {
+                await window.apiClient.removeFromWishlist(productId);
+                
+                // Animate removal
+                card.style.opacity = '0';
+                card.style.transform = 'scale(0.8)';
+                
+                setTimeout(() => {
+                    card.remove();
+                    
+                    // Update count
+                    const remainingItems = document.querySelectorAll('.wishlist-item').length;
+                    const countEl = document.getElementById('wishlistCount');
+                    if (countEl) {
+                        countEl.textContent = `${remainingItems} item${remainingItems !== 1 ? 's' : ''} in your wishlist`;
+                    }
+                    
+                    // Show empty state if no items left
+                    if (remainingItems === 0) {
+                        loadWishlist();
+                    }
+                }, 300);
+
+                if (window.showCartNotification) {
+                    window.showCartNotification('Item removed from wishlist', 'info');
+                }
+            } catch (error) {
+                console.error('Error removing from wishlist:', error);
+                if (window.showCartNotification) {
+                    window.showCartNotification('Failed to remove item', 'error');
+                }
+            }
+        }
+
+        function formatCurrency(amount) {
+            if (amount === undefined || amount === null) return '₦0.00';
+            const num = parseFloat(amount);
+            if (isNaN(num)) return '₦0.00';
+            return new Intl.NumberFormat('en-NG', {
+                style: 'currency',
+                currency: 'NGN',
+            }).format(num);
+        }
+
+        function showError(message) {
+            const grid = document.getElementById('wishlistGrid');
+            grid.innerHTML = `
+                <div class="empty-wishlist" style="grid-column: 1 / -1;">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <h3>Error</h3>
+                    <p>${message}</p>
+                </div>
+            `;
+        }
+    </script>
+    <script src="../js/tash-chatbot.js"></script>
+
+    <!-- TASH AI Chatbot -->
+    <div class="chatbot-container" id="tashChatbot">
+        <div class="chatbot-toggle" id="chatbotToggle">
+            <i class="fas fa-comments"></i>
+            <span class="chatbot-label">Chat with TASH</span>
+        </div>
+        <div class="chatbot-window" id="chatbotWindow">
+            <div class="chatbot-header">
+                <div class="chatbot-title">
+                    <i class="fas fa-robot"></i>
+                    <span>TASH - AI Assistant</span>
+                </div>
+                <div class="chatbot-header-controls">
+                    <button class="chatbot-voice-toggle" id="chatbotVoiceToggle" title="Voice Off">
+                        <i class="fas fa-volume-mute"></i>
+                    </button>
+                    <button class="chatbot-close" id="chatbotClose" title="Close">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="speaking-indicator" id="speakingIndicator">
+                <i class="fas fa-volume-up"></i>
+                <span>TASH is speaking...</span>
+            </div>
+            <div class="chatbot-messages" id="chatbotMessages">
+                <div class="message bot-message">
+                    <div class="message-avatar"><i class="fas fa-robot"></i></div>
+                    <div class="message-content">
+                        <p>Hello! I'm TASH, your AI assistant. How can I help you today?</p>
+                    </div>
+                </div>
+            </div>
+            <div class="chatbot-input">
+                <input type="text" id="chatbotInput" placeholder="Type or speak...">
+                <button class="chatbot-mic" id="chatbotMic" title="Voice Input"><i class="fas fa-microphone"></i></button>
+                <button class="chatbot-send" id="chatbotSend" title="Send"><i class="fas fa-paper-plane"></i></button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

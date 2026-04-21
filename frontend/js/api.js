@@ -3,8 +3,11 @@
  * Handles all API communication with the backend
  */
 
-// API Base URL - update this to match your backend server
-const API_BASE_URL = window.API_BASE_URL || 'http://localhost:3030/api';
+// API Base URL: set globally for all frontend calls.
+// Uses same-origin /api by default so backend host stays out of frontend code.
+window.API_BASE_URL = window.API_BASE_URL || '/api';
+
+const API_BASE_URL = String(window.API_BASE_URL || '/api').replace(/\/$/, '');
 
 class APIClient {
   constructor(baseURL = API_BASE_URL) {

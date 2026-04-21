@@ -222,14 +222,25 @@ class APIClient {
   }
 
   // Orders methods
+  generateIdempotencyKey() {
+    if (typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function') {
+      return crypto.randomUUID();
+    }
+    return `idem-${Date.now()}-${Math.random().toString(36).slice(2, 12)}`;
+  }
+
   /**
    * Create a new order
    * @param {Object} orderData - Order data
    * @returns {Promise<Object>} Order creation response
    */
   async createOrder(orderData) {
+    const idempotencyKey = this.generateIdempotencyKey();
     return await this.request('/orders', {
       method: 'POST',
+      headers: {
+        'Idempotency-Key': idempotencyKey,
+      },
       body: orderData,
     });
   }

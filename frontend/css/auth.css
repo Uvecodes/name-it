@@ -1,6 +1,6 @@
 /* Authentication Pages Styles */
 .auth-section {
-  min-height: calc(100vh - 80px);
+  min-height: calc(100dvh - 5rem);
   background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
   padding: 40px 0;
   display: flex;
@@ -315,7 +315,10 @@
 @media (max-width: 900px) {
   .auth-container {
     grid-template-columns: 1fr;
-    max-width: 500px;
+    max-width: min(500px, 100%);
+    width: 100%;
+    margin: 0 auto;
+    border-radius: 16px;
   }
   
   .auth-image {
@@ -329,11 +332,17 @@
 
 @media (max-width: 600px) {
   .auth-section {
-    padding: 20px 0;
+    padding: 16px 0 24px;
+    align-items: flex-start;
+  }
+
+  .auth-container {
+    border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
   }
   
   .auth-form-container {
-    padding: 30px 20px;
+    padding: 28px 18px;
   }
   
   .auth-header h1 {
@@ -349,40 +358,11 @@
   .social-login {
     gap: 8px;
   }
+
+  .input-wrapper input {
+    font-size: 16px;
+  }
 }
-@media (max-width: 600px) {
-  .container {
-    padding: 0 8px;
-  }
-  .nav-flex {
-    flex-direction: column;
-    height: auto;
-    gap: 12px;
-    padding: 12px 0;
-  }
-  .nav-menu {
-    gap: 18px;
-  }
-  .brands-flex {
-    flex-direction: column;
-    gap: 12px;
-    font-size: 1rem;
-  }
-  .hero-text h1 {
-    font-size: 2rem;
-  }
-  .hero-large {
-    font-size: 2.5rem;
-  }
-  .products-row {
-    grid-template-columns: 1fr;
-    gap: 18px;
-  }
-  .gallery-feature-grid {
-    grid-template-columns: 1fr;
-    gap: 18px;
-  }
-} 
 
 /* Additional Auth Styles for Signup */
 .form-row {

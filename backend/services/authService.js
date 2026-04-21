@@ -4,7 +4,13 @@
  */
 
 const admin = require('firebase-admin');
-const db = admin.firestore();
+
+function getDb() {
+  if (!admin.apps.length) {
+    throw new Error('Firebase is not initialized');
+  }
+  return admin.firestore();
+}
 
 /**
  * Create a new user account
@@ -97,6 +103,7 @@ async function getUserById(uid) {
  */
 async function saveUserToFirestore(uid, userData) {
   try {
+    const db = getDb();
     const userDoc = {
       email: userData.email,
       name: userData.name || '',
@@ -120,6 +127,7 @@ async function saveUserToFirestore(uid, userData) {
  */
 async function getUserFromFirestore(uid) {
   try {
+    const db = getDb();
     const userDoc = await db.collection('users').doc(uid).get();
     
     if (!userDoc.exists) {
@@ -167,6 +175,7 @@ async function updateUserPassword(uid, newPassword) {
  */
 async function deleteUser(uid) {
   try {
+    const db = getDb();
     await admin.auth().deleteUser(uid);
     // Optionally delete user data from Firestore
     await db.collection('users').doc(uid).delete();

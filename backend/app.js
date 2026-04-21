@@ -14,13 +14,29 @@ const { requestId, basicSecurityHeaders } = require('./middleware/security');
 const app = express();
 const PORT = process.env.PORT || 3030;
 
+function loadFirebaseServiceAccount() {
+  const json = process.env.FIREBASE_SERVICE_ACCOUNT_JSON;
+  if (json) {
+    const parsed = JSON.parse(json);
+    if (parsed.private_key) {
+      parsed.private_key = parsed.private_key.replace(/\\n/g, '\n');
+    }
+    return parsed;
+  }
+
+  // Local fallback for development machines.
+  // This file should not exist in production.
+  // eslint-disable-next-line global-require, import/no-dynamic-require
+  return require('./service-account.json');
+}
+
 // Initialize Firebase Admin SDK
 try {
-  const serviceAccount = require('./service-account.json');
+  const serviceAccount = loadFirebaseServiceAccount();
   
   admin.initializeApp({
     credential: admin.credential.cert(serviceAccount),
-    projectId: serviceAccount.project_id,
+    projectId: process.env.FIREBASE_PROJECT_ID || serviceAccount.project_id,
     storageBucket: 'name-it-e674c.firebasestorage.app',
   });
   

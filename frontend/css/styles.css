@@ -21,12 +21,14 @@ body {
   color: var(--color-ink);
   min-height: 100vh;
   line-height: 1.6;
+  overflow-x: hidden;
 }
 
 .modern-body {
   font-family: var(--font-sans);
   background: var(--color-off-white);
   color: var(--color-ink);
+  overflow-x: hidden;
 }
 
 img {
@@ -229,7 +231,7 @@ h1 {
   padding: 4rem 0 5rem 0;
   position: relative;
   overflow: hidden;
-  min-height: 600px;
+  min-height: clamp(22rem, 72vh, 38rem);
   display: flex;
   align-items: center;
 }
@@ -579,6 +581,7 @@ h1 {
   background: var(--color-ink);
   color: var(--color-off-white);
   padding: 6rem 0 6rem 0;
+  overflow-x: hidden;
 }
 
 #newProducts .section-title {
@@ -1249,32 +1252,52 @@ h1 {
 
 @media (max-width: 900px) {
   .nav-flex {
-    justify-content: space-between;
-    flex-wrap: nowrap;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    grid-template-rows: auto auto;
+    align-items: center;
+    column-gap: 0.75rem;
+    row-gap: 0;
     height: auto;
-    padding: 1rem 0;
+    min-height: 4.25rem;
+    padding: 0.75rem 0;
     position: relative;
   }
   .hamburger {
     display: flex;
+    grid-column: 1;
+    grid-row: 1;
+    justify-self: start;
   }
   .nav-logo {
-    position: absolute;
-    left: 30%;
-    transform: translateX(-45%);
+    position: static;
+    transform: none;
+    left: auto;
+    grid-column: 2;
+    grid-row: 1;
+    justify-self: center;
     z-index: 100;
+    max-width: 100%;
+    min-width: 0;
   }
   .nav-right {
-    margin-left: auto;
-    gap: 1rem;
+    margin-left: 0;
+    grid-column: 3;
+    grid-row: 1;
+    justify-self: end;
+    gap: 0.65rem;
+    flex-shrink: 0;
   }
   .nav-menu {
     display: none;
-    position: absolute;
-    top: calc(100% + 0.75rem);
-    left: 1rem;
-    right: 1rem;
-    width: auto;
+    grid-column: 1 / -1;
+    grid-row: 2;
+    position: static;
+    top: auto;
+    left: auto;
+    right: auto;
+    width: 100%;
+    margin-top: 0.75rem;
     background: #F9F6EE; /* Soft Ivory */
     flex-direction: column;
     gap: 0;
@@ -1302,7 +1325,7 @@ h1 {
   }
   .hero-section {
     padding: 3rem 0 3rem 0;
-    min-height: 500px;
+    min-height: clamp(20rem, 65vh, 32rem);
   }
   .hero-grid {
     flex-direction: column;
@@ -1350,11 +1373,14 @@ h1 {
   .carousel-next {
     right: 0;
   }
+  .carousel-wrapper {
+    gap: 1.25rem;
+  }
 }
 
 @media (max-width: 768px) {
   .container {
-    padding: 0 1rem;
+    padding: 0 clamp(0.75rem, 4vw, 1rem);
   }
   .navbar {
     box-shadow: 0 0.75rem 1.5rem rgba(0, 31, 63, 0.04); /* Deep Navy shadow */
@@ -1372,8 +1398,9 @@ h1 {
     gap: 0.5rem;
   }
   .nav-buttons .btn {
-    padding: 0.625rem 1.25rem;
-    font-size: 0.95rem;
+    padding: 0.55rem 1rem;
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
   }
   .cart-link {
     font-size: 1.1rem;
@@ -1462,6 +1489,9 @@ h1 {
   .carousel-indicator.active {
     width: 20px;
   }
+  .carousel-wrapper {
+    gap: 1rem;
+  }
 }
 
 @media (max-width: 576px) {
@@ -1544,7 +1574,7 @@ h1 {
 @media (max-width: 480px) {
   
   .container {
-    padding: 0 0.75rem;
+    padding: 0 clamp(0.625rem, 3.5vw, 0.875rem);
   }
   .hamburger {
     width: 25px;
@@ -1555,6 +1585,7 @@ h1 {
   }
   .hero-section {
     padding: 2rem 0 1.5rem 0;
+    min-height: clamp(18rem, 62vh, 28rem);
   }
   .hero-text h1 {
     font-size: 1.9rem;
@@ -1568,6 +1599,14 @@ h1 {
   .btn {
     padding: 0.625rem 1.5rem;
     font-size: 0.95rem;
+  }
+  .nav-buttons {
+    gap: 0.35rem;
+  }
+  .nav-buttons .btn {
+    padding: 0.5rem 0.65rem;
+    font-size: 0.62rem;
+    letter-spacing: 0.08em;
   }
   .brands-row {
     padding: 1rem 0;

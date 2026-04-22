@@ -12,7 +12,16 @@ class TashChatbot {
     this.isSpeaking = false;
     this.recognition = null;
     this.synthesis = window.speechSynthesis;
-    const apiBase = String(window.API_BASE_URL || '/api').replace(/\/$/, '');
+    const apiBase = String(
+      window.API_BASE_URL ||
+        (typeof window !== 'undefined' &&
+        (window.location.hostname === 'localhost' ||
+          window.location.hostname === '127.0.0.1' ||
+          window.location.hostname === '[::1]' ||
+          window.location.hostname === '')
+          ? 'http://localhost:3030/api'
+          : '/api')
+    ).replace(/\/$/, '');
     this.API_URL = `${String(apiBase).replace(/\/$/, '')}/chat`;
     this.chatSessionId = sessionStorage.getItem('tash_chat_session_id') || null;
     

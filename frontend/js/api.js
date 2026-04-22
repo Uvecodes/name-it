@@ -3,9 +3,23 @@
  * Handles all API communication with the backend
  */
 
-// API Base URL: set globally for all frontend calls.
-// Uses same-origin /api by default so backend host stays out of frontend code.
-window.API_BASE_URL = window.API_BASE_URL || '/api';
+// API Base URL: set window.API_BASE_URL before this script to override.
+// - Local (Live Server, etc.): POST /api on :5500 is not proxied → 405. Point at Node backend.
+// - Production (Netlify): use same-origin /api and proxy via _redirects (no Render URL in JS).
+function resolveDefaultApiBaseUrl() {
+  if (typeof window === 'undefined') return '/api';
+  const host = window.location.hostname;
+  const isLocal =
+    host === 'localhost' ||
+    host === '127.0.0.1' ||
+    host === '[::1]' ||
+    host === '';
+  return isLocal ? 'http://localhost:3030/api' : '/api';
+}
+
+if (!window.API_BASE_URL) {
+  window.API_BASE_URL = resolveDefaultApiBaseUrl();
+}
 
 const API_BASE_URL = String(window.API_BASE_URL || '/api').replace(/\/$/, '');
 

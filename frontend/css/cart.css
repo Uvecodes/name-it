@@ -523,3 +523,59 @@
   }
 }
 
+/* Cart & payment page nav: logo left, arrow + CTA right (no hamburger) */
+.cart-page-navbar .cart-nav-inner {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.cart-nav-flex {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  min-height: 3.25rem;
+  gap: 16px;
+}
+
+.cart-page-navbar .nav-logo {
+  flex-shrink: 0;
+}
+
+.cart-nav-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-left: auto;
+  padding: 10px 16px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-decoration: none;
+  color: #0b0b0e;
+  border: 1px solid rgba(11, 11, 14, 0.18);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.9);
+  transition: background 0.2s, border-color 0.2s, color 0.2s;
+}
+
+.cart-nav-cta:hover {
+  border-color: rgb(20, 184, 166);
+  color: rgb(15, 148, 134);
+  background: rgba(20, 184, 166, 0.08);
+}
+
+.cart-nav-cta i {
+  font-size: 0.95em;
+}
+
+@media (max-width: 900px) {
+  .cart-page-navbar .cart-nav-flex > .nav-logo {
+    order: 0;
+  }
+
+  .cart-page-navbar .cart-nav-flex > .cart-nav-cta {
+    order: 1;
+  }
+}
+

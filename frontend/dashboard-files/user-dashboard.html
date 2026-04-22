@@ -11,18 +11,37 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body class="modern-body">
-    <!-- Header -->
+    <!-- Header: top bar + search row beneath -->
     <header class="dashboard-header">
-        <div class="header-container">
-            <div class="logo-section">
-                <!-- <a href="../index.html" style="text-decoration: none;"> -->
-                    <h1 style="font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; font-style: italic; color: #0B0B0E; letter-spacing: -0.5px; margin: 0;">NAMEIT</h1>
-                <!-- </a> -->
+        <div class="header-inner">
+            <div class="header-top">
+                <div class="logo-section">
+                    <!-- <a href="../index.html" style="text-decoration: none;"> -->
+                        <h1 style="font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; font-style: italic; color: #0B0B0E; letter-spacing: -0.5px; margin: 0;">NAMEIT</h1>
+                    <!-- </a> -->
+                </div>
+                <div class="header-actions">
+                    <a href="../cart.html" class="header-link" data-cart-icon>
+                        <i class="fas fa-shopping-cart"></i>
+                        <span>Cart</span>
+                    </a>
+                    <a href="./user-profile.html" class="header-link">
+                        <i class="fas fa-user"></i>
+                        <span>Account</span>
+                    </a>
+                    <button onclick="logout()" class="header-link logout-btn" style="background: none; border: none; cursor: pointer; color: inherit; font-size: inherit;">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span>Logout</span>
+                    </button>
+                </div>
             </div>
-            
-
-            <!-- activate the search section later -->
-            <div class="search-section">
+            <div class="header-search-row">
+                <div class="header-filters-group">
+                    <button type="button" class="filters-menu-btn" id="filtersMenuBtn" aria-expanded="false" aria-controls="dashboardFiltersPanel" aria-label="Open filters">
+                        <span class="filters-menu-btn-bars" aria-hidden="true"><span></span><span></span><span></span></span>
+                    </button>
+                    <span class="filters-menu-caption">search by filters</span>
+                </div>
                 <form class="search-form">
                     <input type="text" placeholder="Search luxury perfumes and clothings..." class="search-input">
                     <button type="submit" class="search-btn">
@@ -30,32 +49,17 @@
                     </button>
                 </form>
             </div>
-            
-            <div class="header-actions">
-                <a href="../cart.html" class="header-link" data-cart-icon>
-                    <i class="fas fa-shopping-cart"></i>
-                    <span>Cart</span>
-                </a>
-                <a href="./user-profile.html" class="header-link">
-                    <i class="fas fa-user"></i>
-                    <span>Account</span>
-                </a>
-                <button onclick="logout()" class="header-link logout-btn" style="background: none; border: none; cursor: pointer; color: inherit; font-size: inherit;">
-                    <i class="fas fa-sign-out-alt"></i>
-                    <span>Logout</span>
-                </button>
-            </div>
         </div>
     </header>
 
     <!-- Main Content -->
     <main class="dashboard-main">
+        <div class="filters-backdrop" id="filtersBackdrop" aria-hidden="true"></div>
         <!-- Sidebar Filters -->
- <aside class="sidebar-filters" data-filter-panel>
-            <!-- <button class="filters-toggle" type="button" aria-expanded="false">
-                <span class="filters-toggle-icon"><i class="fas fa-sliders-h"></i></span>
-                <span class="filters-toggle-label">Filters</span>
-            </button> -->
+        <aside class="sidebar-filters" data-filter-panel id="dashboardFiltersPanel">
+            <button type="button" class="filters-drawer-close" aria-label="Close filters">
+                <i class="fas fa-times"></i>
+            </button>
             <h3>Filters</h3>
             
             <div class="filter-section">

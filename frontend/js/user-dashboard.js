@@ -27,8 +27,61 @@ let originalPopularProductIds = [];
 // INITIALIZATION
 // ============================================
 
+const FILTER_DRAWER_BREAKPOINT = 768;
+
+/**
+ * Mobile: filters open in a left drawer; desktop: sidebar stays in layout.
+ */
+function initFiltersDrawer() {
+  const btn = document.getElementById('filtersMenuBtn');
+  const panel = document.getElementById('dashboardFiltersPanel');
+  const backdrop = document.getElementById('filtersBackdrop');
+  const closeBtn = document.querySelector('.filters-drawer-close');
+  if (!btn || !panel || !backdrop) return;
+
+  const isDrawerMode = () =>
+    typeof window.matchMedia === 'function' &&
+    window.matchMedia(`(max-width: ${FILTER_DRAWER_BREAKPOINT}px)`).matches;
+
+  const openDrawer = () => {
+    panel.classList.add('is-open');
+    backdrop.classList.add('is-open');
+    btn.classList.add('is-open');
+    btn.setAttribute('aria-expanded', 'true');
+    backdrop.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+  };
+
+  const closeDrawer = () => {
+    panel.classList.remove('is-open');
+    backdrop.classList.remove('is-open');
+    btn.classList.remove('is-open');
+    btn.setAttribute('aria-expanded', 'false');
+    backdrop.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+  };
+
+  btn.addEventListener('click', () => {
+    if (!isDrawerMode()) return;
+    if (panel.classList.contains('is-open')) closeDrawer();
+    else openDrawer();
+  });
+
+  backdrop.addEventListener('click', closeDrawer);
+  if (closeBtn) closeBtn.addEventListener('click', closeDrawer);
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && panel.classList.contains('is-open')) closeDrawer();
+  });
+
+  window.addEventListener('resize', () => {
+    if (!isDrawerMode()) closeDrawer();
+  });
+}
+
 // Wait for DOM and API client to be ready
 document.addEventListener('DOMContentLoaded', () => {
+  initFiltersDrawer();
   // Wait a bit for API client to initialize
   setTimeout(() => {
     loadDashboardProducts();

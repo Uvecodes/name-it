@@ -67,11 +67,13 @@ h1 {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 0.75rem;
   height: 5rem;
 }
 .nav-logo {
   display: flex;
   align-items: center;
+  flex-shrink: 0;
 }
 .nav-logo img {
   height: clamp(2.5rem, 4vw, 3.5rem);
@@ -79,10 +81,15 @@ h1 {
   display: block;
 }
 .nav-menu {
+  flex: 1;
   display: flex;
+  justify-content: center;
+  align-items: center;
   gap: 2.25rem;
   list-style: none;
-  margin: 0 auto;
+  margin: 0;
+  padding: 0;
+  min-width: 0;
 }
 .nav-link {
   text-decoration: none;
@@ -114,7 +121,17 @@ h1 {
 .nav-right {
   display: flex;
   align-items: center;
+  justify-content: flex-end;
   gap: 1.5rem;
+  flex-shrink: 0;
+}
+
+/* Groups cart + auth + menu toggle on the right (home / modern navbar markup) */
+.nav-bar-end {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  flex-shrink: 0;
 }
 
 .nav-buttons {
@@ -198,23 +215,50 @@ h1 {
 .hamburger {
   display: none;
   flex-direction: column;
-  justify-content: space-around;
-  width: 30px;
-  height: 25px;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  box-sizing: border-box;
+  width: 44px;
+  height: 44px;
+  padding: 10px;
+  margin: 0;
   cursor: pointer;
   z-index: 101;
+  flex-shrink: 0;
+  border: 1px solid rgba(11, 11, 14, 0.14);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.85);
+  box-shadow: 0 1px 2px rgba(11, 11, 14, 0.06);
+  transition: background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.hamburger:hover {
+  background: rgba(11, 11, 14, 0.04);
+  border-color: rgba(11, 11, 14, 0.22);
+}
+
+.hamburger:focus-visible {
+  outline: 2px solid var(--color-ink);
+  outline-offset: 2px;
 }
 
 .hamburger span {
-  width: 100%;
-  height: 3px;
+  display: block;
+  width: 20px;
+  height: 2px;
   background: var(--color-ink);
-  transition: all 0.3s ease;
+  transition: transform 0.3s ease, opacity 0.25s ease;
   border-radius: 2px;
 }
 
+.hamburger.active {
+  background: rgba(11, 11, 14, 0.06);
+  border-color: rgba(11, 11, 14, 0.22);
+}
+
 .hamburger.active span:nth-child(1) {
-  transform: rotate(45deg) translate(5px, 5px);
+  transform: translateY(7px) rotate(45deg);
 }
 
 .hamburger.active span:nth-child(2) {
@@ -222,7 +266,7 @@ h1 {
 }
 
 .hamburger.active span:nth-child(3) {
-  transform: rotate(-45deg) translate(7px, -6px);
+  transform: translateY(-7px) rotate(-45deg);
 }
 
 /* Hero Section - Fiverr Style with Background Video */
@@ -1252,52 +1296,58 @@ h1 {
 
 @media (max-width: 900px) {
   .nav-flex {
-    display: grid;
-    grid-template-columns: auto 1fr auto;
-    grid-template-rows: auto auto;
+    display: flex;
+    flex-wrap: wrap;
     align-items: center;
-    column-gap: 0.75rem;
-    row-gap: 0;
+    align-content: center;
+    gap: 0.5rem 0.65rem;
     height: auto;
     min-height: 4.25rem;
     padding: 0.75rem 0;
     position: relative;
+    justify-content: flex-start;
   }
-  .hamburger {
-    display: flex;
-    grid-column: 1;
-    grid-row: 1;
-    justify-self: start;
-  }
+  /* One row: logo left — cart, login/signup, hamburger right; links panel wraps below */
   .nav-logo {
+    order: 1;
     position: static;
     transform: none;
     left: auto;
-    grid-column: 2;
-    grid-row: 1;
-    justify-self: center;
     z-index: 100;
-    max-width: 100%;
+    max-width: min(52vw, 14rem);
     min-width: 0;
+    justify-content: flex-start;
   }
-  .nav-right {
-    margin-left: 0;
-    grid-column: 3;
-    grid-row: 1;
-    justify-self: end;
+  .nav-flex > .nav-bar-end {
+    order: 2;
+    margin-left: auto;
+  }
+  .nav-flex > .nav-right {
+    order: 2;
+    margin-left: auto;
     gap: 0.65rem;
     flex-shrink: 0;
   }
+  .nav-flex > .hamburger {
+    order: 3;
+  }
+  .nav-flex .hamburger {
+    display: flex;
+  }
   .nav-menu {
+    order: 10;
+    flex: none;
+    flex-basis: 100%;
+    width: 100%;
+    max-width: 100%;
+    margin-top: 0.75rem;
+    margin-left: 0;
     display: none;
-    grid-column: 1 / -1;
-    grid-row: 2;
     position: static;
     top: auto;
     left: auto;
     right: auto;
-    width: 100%;
-    margin-top: 0.75rem;
+    justify-content: stretch;
     background: #F9F6EE; /* Soft Ivory */
     flex-direction: column;
     gap: 0;
@@ -1576,11 +1626,8 @@ h1 {
   .container {
     padding: 0 clamp(0.625rem, 3.5vw, 0.875rem);
   }
-  .hamburger {
-    width: 25px;
-    height: 20px;
-  }
   .hamburger span {
+    width: 18px;
     height: 2px;
   }
   .hero-section {

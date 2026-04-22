@@ -202,23 +202,50 @@
                 font-size: 1rem;
             }
         }
+
+        /* Navbar: logo left, account menu right (no hamburger / no back in bar) */
+        .orders-navbar .orders-nav-inner {
+            padding-left: 0;
+            padding-right: 0;
+        }
+
+        .orders-nav-flex {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            min-height: 3.25rem;
+            gap: 16px;
+        }
+
+        .orders-navbar .nav-logo {
+            flex-shrink: 0;
+        }
+
+        .orders-navbar .nav-right {
+            flex-shrink: 0;
+            margin-left: auto;
+        }
+
+        @media (max-width: 900px) {
+            .orders-navbar .orders-nav-flex > .nav-logo {
+                order: 0;
+            }
+
+            .orders-navbar .orders-nav-flex > .nav-right {
+                order: 1;
+            }
+        }
     </style>
 </head>
 <body class="modern-body">
     <!-- Navigation -->
-    <nav class="navbar">
-        <div class="container nav-flex">
-            <button class="hamburger" type="button" aria-label="Toggle navigation" aria-expanded="false">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
+    <nav class="navbar orders-navbar">
+        <div class="container orders-nav-inner">
+            <div class="orders-nav-flex">
             <div class="nav-logo">
                 <h1 style="font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; font-style: italic; color: #0B0B0E; letter-spacing: -0.5px; margin: 0;">NAMEIT</h1>
             </div>
-           
-            <a href="./user-profile.html" class="action-btn">Back to Profile</a>
-            
             <div class="nav-right">
                 <div class="user-menu">
                     <div class="user-avatar">
@@ -234,6 +261,7 @@
                         <a href="#" class="dropdown-item" onclick="logout(); return false;"><i class="fas fa-sign-out-alt"></i> Logout</a>
                     </div>
                 </div>
+            </div>
             </div>
         </div>
     </nav>

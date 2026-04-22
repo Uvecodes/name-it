@@ -65,6 +65,277 @@ function showToast(message, type = "success") {
 // Import offline detection (you'll need to add this)
 // For now, we'll add the offline check directly in the functions
 
+const SIGNUP_MIN_PASSWORD_LENGTH = 6;
+
+function isValidSignupEmail(value) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(value || '').trim());
+}
+
+function signupPhoneDigits(value) {
+  return String(value || '').replace(/\D/g, '');
+}
+
+function isValidSignupPhone(value) {
+  const digits = signupPhoneDigits(value);
+  return digits.length >= 8 && digits.length <= 15;
+}
+
+function getSignupValidationState() {
+  const firstNameInput = document.getElementById('firstname');
+  const lastNameInput = document.getElementById('lastname');
+  const emailInput = document.getElementById('email');
+  const phoneInput = document.getElementById('signupPhone');
+  const passwordInput = document.getElementById('signup-password');
+  const confirmInput = document.getElementById('signup-confirm-password');
+  const termsInput = document.getElementById('terms-agreement');
+
+  if (!firstNameInput || !lastNameInput || !emailInput || !phoneInput || !passwordInput || !confirmInput || !termsInput) {
+    return { valid: false, reason: 'missing_elements' };
+  }
+
+  const firstName = firstNameInput.value.trim();
+  const lastName = lastNameInput.value.trim();
+  const email = emailInput.value.trim();
+  const phone = phoneInput.value.trim();
+  const password = passwordInput.value;
+  const confirmPassword = confirmInput.value;
+
+  if (!firstName || !lastName) {
+    return { valid: false, reason: 'name' };
+  }
+  if (!email || !isValidSignupEmail(email)) {
+    return { valid: false, reason: 'email' };
+  }
+  if (!phone || !isValidSignupPhone(phone)) {
+    return { valid: false, reason: 'phone' };
+  }
+  if (!password || password.length < SIGNUP_MIN_PASSWORD_LENGTH) {
+    return { valid: false, reason: 'password' };
+  }
+  if (password !== confirmPassword) {
+    return { valid: false, reason: 'confirm' };
+  }
+  if (!termsInput.checked) {
+    return { valid: false, reason: 'terms' };
+  }
+
+  return { valid: true };
+}
+
+function highlightInvalidSignupFields() {
+  const firstNameInput = document.getElementById('firstname');
+  const lastNameInput = document.getElementById('lastname');
+  const emailInput = document.getElementById('email');
+  const phoneInput = document.getElementById('signupPhone');
+  const passwordInput = document.getElementById('signup-password');
+  const confirmInput = document.getElementById('signup-confirm-password');
+  const termsInput = document.getElementById('terms-agreement');
+
+  const toggleInputInvalid = (inputEl, invalid) => {
+    if (!inputEl) return;
+    const wrapped = inputEl.closest('.input-wrapper');
+    const field = wrapped ? wrapped.querySelector('input') : inputEl;
+    if (field) field.classList.toggle('input-invalid', invalid);
+  };
+
+  const firstName = firstNameInput ? firstNameInput.value.trim() : '';
+  const lastName = lastNameInput ? lastNameInput.value.trim() : '';
+  const email = emailInput ? emailInput.value.trim() : '';
+  const phone = phoneInput ? phoneInput.value.trim() : '';
+  const password = passwordInput ? passwordInput.value : '';
+  const confirmPassword = confirmInput ? confirmInput.value : '';
+
+  toggleInputInvalid(firstNameInput, !firstName);
+  toggleInputInvalid(lastNameInput, !lastName);
+  toggleInputInvalid(emailInput, !email || !isValidSignupEmail(email));
+  toggleInputInvalid(phoneInput, !phone || !isValidSignupPhone(phone));
+  toggleInputInvalid(passwordInput, !password || password.length < SIGNUP_MIN_PASSWORD_LENGTH);
+  toggleInputInvalid(confirmInput, !confirmPassword || password !== confirmPassword);
+
+  if (termsInput) {
+    const label = termsInput.closest('.checkbox-wrapper');
+    if (label) label.classList.toggle('checkbox-invalid', !termsInput.checked);
+  }
+}
+
+function clearSignupFieldHighlights() {
+  document.querySelectorAll('#signupForm .input-invalid').forEach((el) => el.classList.remove('input-invalid'));
+  const termsLabel = document.querySelector('#terms-agreement')?.closest('.checkbox-wrapper');
+  if (termsLabel) termsLabel.classList.remove('checkbox-invalid');
+}
+
+function setSignupSubmitLoading(isLoading) {
+  const btn = document.getElementById('signupSubmitBtn');
+  const label = document.getElementById('signupSubmitLabel');
+  const loading = document.getElementById('signupSubmitLoading');
+  if (!btn) return;
+
+  if (isLoading) {
+    btn.classList.add('is-loading');
+    btn.disabled = true;
+    btn.setAttribute('aria-busy', 'true');
+    btn.setAttribute('aria-disabled', 'true');
+    if (loading) loading.setAttribute('aria-hidden', 'false');
+  } else {
+    btn.classList.remove('is-loading');
+    btn.removeAttribute('aria-busy');
+    if (loading) loading.setAttribute('aria-hidden', 'true');
+    refreshSignupFormUi();
+  }
+}
+
+function refreshSignupFormUi() {
+  const form = document.getElementById('signupForm');
+  const btn = document.getElementById('signupSubmitBtn');
+  const hint = document.getElementById('signupFormHint');
+  if (!form || !btn) return;
+
+  if (btn.classList.contains('is-loading')) {
+    return;
+  }
+
+  const state = getSignupValidationState();
+  const ok = state.valid === true;
+  btn.disabled = !ok;
+  btn.setAttribute('aria-disabled', ok ? 'false' : 'true');
+
+  if (hint) {
+    hint.classList.toggle('is-ready', ok);
+    hint.textContent = ok
+      ? 'All set — you can create your account.'
+      : 'Complete all fields and accept the terms to enable sign up.';
+  }
+
+  if (ok) {
+    clearSignupFieldHighlights();
+  }
+}
+
+function initSignupFormValidation() {
+  const form = document.getElementById('signupForm');
+  if (!form) return;
+
+  const controls = [
+    'firstname',
+    'lastname',
+    'email',
+    'signupPhone',
+    'signup-password',
+    'signup-confirm-password',
+    'terms-agreement',
+  ];
+
+  controls.forEach((id) => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    const evt = el.type === 'checkbox' ? 'change' : 'input';
+    el.addEventListener(evt, () => refreshSignupFormUi());
+  });
+
+  refreshSignupFormUi();
+}
+
+function getLoginValidationState() {
+  const form = document.getElementById('loginForm');
+  if (!form) return { valid: false, reason: 'missing_form' };
+  const emailInput = document.getElementById('login-email');
+  const passwordInput = document.getElementById('login-password');
+  if (!emailInput || !passwordInput) return { valid: false, reason: 'missing_elements' };
+
+  const email = emailInput.value.trim();
+  const password = passwordInput.value;
+
+  if (!email || !isValidSignupEmail(email)) {
+    return { valid: false, reason: 'email' };
+  }
+  if (!password.trim()) {
+    return { valid: false, reason: 'password' };
+  }
+
+  return { valid: true };
+}
+
+function highlightInvalidLoginFields() {
+  const emailInput = document.getElementById('login-email');
+  const passwordInput = document.getElementById('login-password');
+
+  const toggleInputInvalid = (inputEl, invalid) => {
+    if (!inputEl) return;
+    const wrapped = inputEl.closest('.input-wrapper');
+    const field = wrapped ? wrapped.querySelector('input') : inputEl;
+    if (field) field.classList.toggle('input-invalid', invalid);
+  };
+
+  const email = emailInput ? emailInput.value.trim() : '';
+  const password = passwordInput ? passwordInput.value : '';
+
+  toggleInputInvalid(emailInput, !email || !isValidSignupEmail(email));
+  toggleInputInvalid(passwordInput, !password.trim());
+}
+
+function clearLoginFieldHighlights() {
+  document.querySelectorAll('#loginForm .input-invalid').forEach((el) => el.classList.remove('input-invalid'));
+}
+
+function setLoginSubmitLoading(isLoading) {
+  const btn = document.getElementById('loginSubmitBtn');
+  const loading = document.getElementById('loginSubmitLoading');
+  if (!btn) return;
+
+  if (isLoading) {
+    btn.classList.add('is-loading');
+    btn.disabled = true;
+    btn.setAttribute('aria-busy', 'true');
+    btn.setAttribute('aria-disabled', 'true');
+    if (loading) loading.setAttribute('aria-hidden', 'false');
+  } else {
+    btn.classList.remove('is-loading');
+    btn.removeAttribute('aria-busy');
+    if (loading) loading.setAttribute('aria-hidden', 'true');
+    refreshLoginFormUi();
+  }
+}
+
+function refreshLoginFormUi() {
+  const form = document.getElementById('loginForm');
+  const btn = document.getElementById('loginSubmitBtn');
+  const hint = document.getElementById('loginFormHint');
+  if (!form || !btn) return;
+
+  if (btn.classList.contains('is-loading')) {
+    return;
+  }
+
+  const state = getLoginValidationState();
+  const ok = state.valid === true;
+  btn.disabled = !ok;
+  btn.setAttribute('aria-disabled', ok ? 'false' : 'true');
+
+  if (hint) {
+    hint.classList.toggle('is-ready', ok);
+    hint.textContent = ok
+      ? 'You can sign in.'
+      : 'Enter a valid email and password to sign in.';
+  }
+
+  if (ok) {
+    clearLoginFieldHighlights();
+  }
+}
+
+function initLoginFormValidation() {
+  const form = document.getElementById('loginForm');
+  if (!form) return;
+
+  ['login-email', 'login-password'].forEach((id) => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.addEventListener('input', () => refreshLoginFormUi());
+  });
+
+  refreshLoginFormUi();
+}
+
 // Register Function
 async function register(event) {
   // Check if user is offline
@@ -82,6 +353,16 @@ async function register(event) {
   const phoneNumberInput = document.getElementById("signupPhone");
   const passwordInput = document.getElementById("signup-password");
   const confirmInput = document.getElementById("signup-confirm-password");
+  const signupFormEl = document.getElementById('signupForm');
+
+  if (signupFormEl) {
+    const vs = getSignupValidationState();
+    if (!vs.valid) {
+      highlightInvalidSignupFields();
+      showToast('Please complete all required fields correctly.', 'error');
+      return;
+    }
+  }
 
   // Defensive checks: ensure required form fields exist before reading values
   const hasNameField = (firstNameInput && lastNameInput) || nameInput || firstNameInput;
@@ -116,13 +397,14 @@ async function register(event) {
     return;
   }
 
-  try {
-    // Use new API client
-    if (!window.authAPI) {
-      showToast('API client not loaded. Please refresh the page.', 'error');
-      return;
-    }
+  if (!window.authAPI) {
+    showToast('API client not loaded. Please refresh the page.', 'error');
+    return;
+  }
 
+  try {
+    // Loading UI only once the signup request actually starts (not during prior checks).
+    setSignupSubmitLoading(true);
     const response = await window.authAPI.signup({
       email,
       password,
@@ -161,6 +443,8 @@ async function register(event) {
     }
 
     showToast(errorMessage, "error");
+  } finally {
+    setSignupSubmitLoading(false);
   }
 
   /* OLD FIREBASE CODE (deprecated - kept for reference)
@@ -276,47 +560,51 @@ async function login(event) {
     return;
   }
 
-  // Validate form fields exist
-  const emailInput = document.getElementById("email");
-  const passwordInput = document.getElementById("password");
-  
+  const loginFormEl = document.getElementById('loginForm');
+  const emailInput = document.getElementById('login-email');
+  const passwordInput = document.getElementById('login-password');
+
   if (!emailInput || !passwordInput) {
     showToast('Form is incomplete or missing required fields.', 'error');
     return;
   }
 
+  if (loginFormEl) {
+    const vs = getLoginValidationState();
+    if (!vs.valid) {
+      highlightInvalidLoginFields();
+      showToast('Please enter a valid email and password.', 'error');
+      return;
+    }
+  }
+
   const email = emailInput.value.trim();
   const password = passwordInput.value;
 
-  // Validate fields are not empty
-  if (!email || !password) {
-    showToast("Please fill in both email and password.", "error");
+  if (!window.authAPI) {
+    showToast('API client not loaded. Please refresh the page.', 'error');
     return;
   }
 
   try {
-    // Use new API client
-    if (!window.authAPI) {
-      showToast('API client not loaded. Please refresh the page.', 'error');
-      return;
-    }
+    setLoginSubmitLoading(true);
 
-    const response = await window.authAPI.login(email, password);
-    
+    await window.authAPI.login(email, password);
+
     // Clear any navigation flags on successful login
     sessionStorage.removeItem('navigatedAway');
     sessionStorage.removeItem('navigatedAwayFromAuth');
     sessionStorage.removeItem('previousPage');
     navigationTrackingInitialized = false;
-    
+
     showToast("Logged in!", "success");
     window.location.href = "./dashboard-files/user-dashboard.html";
   } catch (error) {
     console.error("Login error:", error);
-    
+
     // Parse API errors and provide user-friendly messages
     let errorMessage = error.message || 'Login failed. Please try again.';
-    
+
     // Handle API error responses
     if (error.data && error.data.message) {
       errorMessage = error.data.message;
@@ -338,8 +626,10 @@ async function login(event) {
     } else if (error.message && error.message.includes('Network')) {
       errorMessage = 'Network error. Please check your internet connection.';
     }
-    
+
     showToast(errorMessage, "error");
+  } finally {
+    setLoginSubmitLoading(false);
   }
 
   /* OLD FIREBASE CODE (deprecated - kept for reference)
@@ -647,6 +937,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const signupForm = document.getElementById("signupForm");
   if (signupForm) {
     signupForm.addEventListener("submit", register);
+    initSignupFormValidation();
     console.log("Signup form event listener attached successfully");
   } else {
     console.log("Signup form not found (this is normal on login page)");
@@ -656,6 +947,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const loginForm = document.getElementById("loginForm");
   if (loginForm) {
     loginForm.addEventListener("submit", login);
+    initLoginFormValidation();
     console.log("Login form event listener attached successfully");
   } else {
     console.log("Login form not found (this is normal on signup page)");

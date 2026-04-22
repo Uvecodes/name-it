@@ -222,6 +222,118 @@
   margin-bottom: 24px;
 }
 
+.signup-submit-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.signup-submit-label {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+/* Hidden until .is-loading — avoids `hidden` + display:inline-flex fighting (spinner visible on load). */
+.signup-submit-loading {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.signup-submit-btn.is-loading .signup-submit-label {
+  display: none;
+}
+
+.signup-submit-btn.is-loading .signup-submit-loading {
+  display: inline-flex;
+}
+
+/* Invalid / incomplete form: dimmed. Not the same as “creating account” loading. */
+.auth-btn.signup-submit-btn:disabled:not(.is-loading) {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.auth-btn.signup-submit-btn.is-loading {
+  opacity: 1;
+  cursor: wait;
+}
+
+.login-submit-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.login-submit-label {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.login-submit-loading {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.login-submit-btn.is-loading .login-submit-label {
+  display: none;
+}
+
+.login-submit-btn.is-loading .login-submit-loading {
+  display: inline-flex;
+}
+
+.auth-btn.login-submit-btn:disabled:not(.is-loading) {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.auth-btn.login-submit-btn.is-loading {
+  opacity: 1;
+  cursor: wait;
+}
+
+.input-wrapper input.input-invalid {
+  border-color: #dc2626;
+}
+
+.signup-form-hint {
+  font-size: 0.875rem;
+  color: #666;
+  margin: -8px 0 20px;
+  text-align: center;
+  line-height: 1.4;
+}
+
+.signup-form-hint.is-ready {
+  color: #047857;
+}
+
+.login-form-hint {
+  font-size: 0.875rem;
+  color: #666;
+  margin: -8px 0 20px;
+  text-align: center;
+  line-height: 1.4;
+}
+
+.login-form-hint.is-ready {
+  color: #047857;
+}
+
+.checkbox-wrapper.checkbox-invalid .checkmark {
+  border-color: #dc2626;
+}
+
 .auth-divider {
   text-align: center;
   margin: 24px 0;
@@ -383,9 +495,10 @@
   text-decoration: underline;
 }
 
-/* Password toggle for signup page */
+/* Password toggle for signup / login pages */
 #signup-password-toggle,
-#signup-confirm-toggle {
+#signup-confirm-toggle,
+#login-password-toggle {
   position: absolute;
   right: 16px;
   background: none;
@@ -397,7 +510,8 @@
 }
 
 #signup-password-toggle:hover,
-#signup-confirm-toggle:hover {
+#signup-confirm-toggle:hover,
+#login-password-toggle:hover {
   color: #111;
 }
 

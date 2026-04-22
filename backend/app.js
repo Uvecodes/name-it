@@ -46,11 +46,31 @@ try {
   console.warn('⚠️  Server will continue but Firebase features may not work');
 }
 
-// Middleware
-// Parse CORS origins - handle comma-separated string or use wildcard
-const corsOrigins = process.env.CORS_ORIGIN 
-  ? process.env.CORS_ORIGIN.split(',').map(origin => origin.trim())
-  : '*';
+// Middleware — CORS (exact origin match; Live Server uses 127.0.0.1 or localhost)
+function resolveCorsOrigins() {
+  const fromEnv = process.env.CORS_ORIGIN
+    ? process.env.CORS_ORIGIN.split(',').map((o) => o.trim()).filter(Boolean)
+    : null;
+
+  if (process.env.NODE_ENV === 'production') {
+    return fromEnv && fromEnv.length ? fromEnv : '*';
+  }
+
+  const devExtras = [
+    'http://localhost:5500',
+    'http://127.0.0.1:5500',
+    'http://localhost:8080',
+    'http://127.0.0.1:8080',
+    'http://localhost:3030',
+    'http://127.0.0.1:3030',
+  ];
+  if (fromEnv && fromEnv.length) {
+    return [...new Set([...fromEnv, ...devExtras])];
+  }
+  return devExtras;
+}
+
+const corsOrigins = resolveCorsOrigins();
 
 app.use(cors({
   origin: corsOrigins,

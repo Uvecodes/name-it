@@ -25,6 +25,8 @@
   // DOM ELEMENTS
   // ============================================
 
+  const PROFILE_NAV_MOBILE_MAX = 900;
+
   const elements = {
     // Navigation
     navUserName: document.getElementById('navUserName'),
@@ -34,6 +36,9 @@
     totalOrders: document.getElementById('totalOrders'),
     wishlistCount: document.getElementById('wishlistCount'),
     rewardPoints: document.getElementById('rewardPoints'),
+    totalOrdersDrawer: document.getElementById('totalOrdersDrawer'),
+    wishlistCountDrawer: document.getElementById('wishlistCountDrawer'),
+    rewardPointsDrawer: document.getElementById('rewardPointsDrawer'),
 
     // Profile
     profileName: document.getElementById('profileName'),
@@ -139,6 +144,22 @@
       });
     }
 
+    const wishlistDrawerCard = document.querySelector('.profile-drawer-stat-wishlist');
+    if (wishlistDrawerCard) {
+      const goWishlist = () => {
+        window.location.href = './wishlist.html';
+      };
+      wishlistDrawerCard.addEventListener('click', goWishlist);
+      wishlistDrawerCard.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          goWishlist();
+        }
+      });
+    }
+
+    initProfileMobileNav();
+
     // View all activity - redirect to activities page
     if (elements.viewAllActivity) {
       elements.viewAllActivity.addEventListener('click', (e) => {
@@ -168,6 +189,75 @@
   }
 
   /**
+   * Mobile drawer: right-side panel with back link, stats, account links.
+   */
+  function initProfileMobileNav() {
+    const toggle = document.getElementById('profileNavToggle');
+    const drawer = document.getElementById('profileNavDrawer');
+    const backdrop = document.getElementById('profileNavBackdrop');
+    const closeBtn = document.getElementById('profileNavDrawerClose');
+    if (!toggle || !drawer || !backdrop) {
+      return;
+    }
+
+    const mq = window.matchMedia(`(max-width: ${PROFILE_NAV_MOBILE_MAX}px)`);
+
+    const openNav = () => {
+      drawer.classList.add('is-open');
+      backdrop.classList.add('is-open');
+      toggle.classList.add('is-open');
+      toggle.setAttribute('aria-expanded', 'true');
+      drawer.setAttribute('aria-hidden', 'false');
+      backdrop.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+    };
+
+    const closeNav = () => {
+      drawer.classList.remove('is-open');
+      backdrop.classList.remove('is-open');
+      toggle.classList.remove('is-open');
+      toggle.setAttribute('aria-expanded', 'false');
+      drawer.setAttribute('aria-hidden', 'true');
+      backdrop.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+    };
+
+    const isMobileNav = () => mq.matches;
+
+    toggle.addEventListener('click', () => {
+      if (!isMobileNav()) {
+        return;
+      }
+      if (drawer.classList.contains('is-open')) {
+        closeNav();
+      } else {
+        openNav();
+      }
+    });
+
+    backdrop.addEventListener('click', closeNav);
+    if (closeBtn) {
+      closeBtn.addEventListener('click', closeNav);
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && drawer.classList.contains('is-open')) {
+        closeNav();
+      }
+    });
+
+    window.addEventListener('resize', () => {
+      if (!isMobileNav()) {
+        closeNav();
+      }
+    });
+
+    drawer.querySelectorAll('a.profile-drawer-link').forEach((link) => {
+      link.addEventListener('click', () => closeNav());
+    });
+  }
+
+  /**
    * Load stats (orders count, wishlist count, reward points)
    */
   async function loadStats() {
@@ -181,25 +271,34 @@
     // Orders count
     if (ordersData.status === 'fulfilled') {
       const count = ordersData.value.count || ordersData.value.orders?.length || 0;
-      updateElement(elements.totalOrders, count.toString());
+      const text = count.toString();
+      updateElement(elements.totalOrders, text);
+      updateElement(elements.totalOrdersDrawer, text);
     } else {
       updateElement(elements.totalOrders, '0');
+      updateElement(elements.totalOrdersDrawer, '0');
     }
 
     // Wishlist count
     if (wishlistData.status === 'fulfilled') {
       const count = wishlistData.value.count || 0;
-      updateElement(elements.wishlistCount, count.toString());
+      const text = count.toString();
+      updateElement(elements.wishlistCount, text);
+      updateElement(elements.wishlistCountDrawer, text);
     } else {
       updateElement(elements.wishlistCount, '0');
+      updateElement(elements.wishlistCountDrawer, '0');
     }
 
     // Reward points
     if (rewardsData.status === 'fulfilled') {
       const balance = rewardsData.value.balance || 0;
-      updateElement(elements.rewardPoints, balance.toString());
+      const text = balance.toString();
+      updateElement(elements.rewardPoints, text);
+      updateElement(elements.rewardPointsDrawer, text);
     } else {
       updateElement(elements.rewardPoints, '0');
+      updateElement(elements.rewardPointsDrawer, '0');
     }
   }
 
